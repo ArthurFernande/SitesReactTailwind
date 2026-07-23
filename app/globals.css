@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-body: "Inter", sans-serif;
+  --font-title: "IBM Plex Mono", monospace;
+  --font-space: "Space Grotesk", sans-serif;
+
+  --color-orange: #fa3e22;
+  --color-blue: #9bb7ff;
+  --color-cyan: #4fd7ff;
+  --color-dark: #05090f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-dark);
+  color: #ffffff;
+  font-family: var(--font-body);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-title {
+  font-family: var(--font-title);
+}
+
+.font-space {
+  font-family: var(--font-space);
+}
