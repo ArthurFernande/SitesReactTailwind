@@ -1,0 +1,374 @@
+@font-face {
+  font-family: "Gaming Legacy Syne";
+  src: url("/assets/fonts/gaming-legacy-erp/syne-8vih7w4qzmvxm2bl9a.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400 800;
+}
+
+@font-face {
+  font-family: "Gaming Legacy Poppins";
+  src: url("/assets/fonts/gaming-legacy-erp/poppins-pxieyp8kv8jhgfvrjjfecg.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Gaming Legacy Montserrat";
+  src: url("/assets/fonts/gaming-legacy-erp/montserrat-jtusjig1_i6t8kchkm459wlhyw.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.page {
+  isolation: isolate;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: #ffffff;
+}
+
+.hero,
+.hero * {
+  box-sizing: border-box;
+}
+
+.hero {
+  position: relative;
+  min-height: 654px;
+  overflow: hidden;
+  padding: 150px 0 0;
+  background: #1113cf url("/assets/imgs/gaming-legacy-erp/back.png") center / cover no-repeat;
+  color: #ffffff;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(25, 42, 248, 0.41);
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  font-family: "Gaming Legacy Poppins", sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  animation: legacyZoomIn 0.8s both;
+}
+
+.title {
+  margin: 0 0 40px;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  animation: legacyZoomIn 0.8s 0.1s both;
+}
+
+.title > span {
+  display: block;
+}
+
+.animatedTitle {
+  animation: legacyTitlePulse 3s ease-in-out infinite;
+}
+
+.description {
+  margin: 0;
+  color: #ececec;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  animation: legacyZoomIn 0.8s 0.2s both;
+}
+
+.description p {
+  margin: 0 0 20px;
+}
+
+.spacer {
+  height: 201px;
+}
+
+.wave {
+  position: absolute;
+  z-index: 2;
+  bottom: -1px;
+  left: 50%;
+  width: calc(255% + 1.3px);
+  height: 72px;
+  transform: translateX(-50%) rotateY(180deg);
+  fill: #ffffff;
+  pointer-events: none;
+}
+
+.modalLayer {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  pointer-events: none;
+}
+
+.modal {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 10px 45px rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+  animation: popupFade 0.25s ease;
+}
+
+.leadForm {
+  padding: 22px;
+  color: #111111;
+  font-family: Arial, sans-serif;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: #000000;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.formField,
+.radioField {
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 14px;
+  border: 0;
+}
+
+.formField label,
+.radioField legend {
+  display: block;
+  margin: 0 0 7px;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.formField span,
+.radioField span {
+  color: #111111;
+}
+
+.formField input {
+  width: 100%;
+  max-width: 100%;
+  height: 44px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 0 14px;
+  color: #111111;
+  font-size: 14px;
+  outline: none;
+}
+
+.formField input:focus {
+  border-color: #25d366;
+  box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.18);
+}
+
+.radioGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.radioGrid input {
+  position: absolute;
+  opacity: 0;
+}
+
+.radioGrid label {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #111111;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.radioGrid input:checked + label {
+  border-color: #25d366;
+  background: #25d366;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.radioGrid input:focus-visible + label {
+  outline: 3px solid rgba(37, 211, 102, 0.3);
+  outline-offset: 2px;
+}
+
+.submitButton {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 14px;
+  background: #25d366;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
+  color: #ffffff;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.submitStatus {
+  margin: 12px 0 0;
+  color: #167f3c;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+@keyframes legacyZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes legacyTitlePulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.78;
+  }
+}
+
+@keyframes popupFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1366px) {
+  .hero {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 60px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal {
+    right: 12px;
+    width: 360px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: 0;
+    padding: 100px 20px 0;
+  }
+
+  .title {
+    font-size: 45px;
+  }
+
+  .animatedTitle {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 430px) {
+  .modal {
+    right: 8px;
+    left: 8px;
+    width: calc(100vw - 16px);
+    max-height: 82vh;
+    border-radius: 18px;
+  }
+
+  .leadForm {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 375px) {
+  .modal {
+    right: 6px;
+    left: 6px;
+    width: calc(100vw - 12px);
+    border-radius: 16px;
+  }
+
+  .leadForm {
+    padding: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .title,
+  .description,
+  .animatedTitle,
+  .modal {
+    animation: none;
+  }
+}
