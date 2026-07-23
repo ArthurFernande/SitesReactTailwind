@@ -1,0 +1,4 @@
+interface:
+  display_name: "HTML to Next Page"
+  short_description: "Converta HTML completo em uma página Next.js fiel"
+  default_prompt: "Use $html-to-next-page para converter um arquivo HTML completo em uma nova página Next.js fiel neste repositório."
