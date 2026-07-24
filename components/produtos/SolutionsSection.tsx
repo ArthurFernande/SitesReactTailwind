@@ -1,4 +1,7 @@
+"use client";
+
 import { Space_Grotesk } from "next/font/google";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 import {
   ProductCard,
@@ -10,12 +13,16 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["400", "500", "600", "700"],
 });
 
-const products: ProductCardProps[] = [
+type ProductDefinition = Omit<ProductCardProps, "category" | "description"> & {
+  categoryKey: TranslationKey;
+  descriptionKey: TranslationKey;
+};
+
+const products: ProductDefinition[] = [
   {
     title: "ARCADE",
-    category: "Entretenimento digital",
-    description:
-      "Plataforma white label para operações de entretenimento digital com tecnologia validada e escalabilidade real.",
+    categoryKey: "products.solutions.arcade.category",
+    descriptionKey: "products.solutions.arcade.description",
 
     imageSrc: "/assets/imgs/produtos/arcade-area.jpeg",
     logoSrc: "/assets/imgs/produtos/logo-arcade.png",
@@ -26,9 +33,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "Global Gaming ERP",
-    category: "Gestão · Gaming",
-    description:
-      "ERP completo para operadores de gaming: financeiro, jogadores, fornecedores e BI em uma única plataforma.",
+    categoryKey: "products.solutions.globalGaming.category",
+    descriptionKey: "products.solutions.globalGaming.description",
 
     imageSrc: "/assets/imgs/produtos/globalgaming-area.jpeg",
 
@@ -36,9 +42,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "Gaming Legacy ERP",
-    category: "Gestão · Legado",
-    description:
-      "Continuidade operacional para sistemas legados de gaming sem reescrever do zero o que já funciona.",
+    categoryKey: "products.solutions.legacy.category",
+    descriptionKey: "products.solutions.legacy.description",
 
     imageSrc: "/assets/imgs/produtos/gaminglegacy-area.jpeg",
 
@@ -46,9 +51,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "VAPT",
-    category: "Cibersegurança",
-    description:
-      "Plataforma dedicada a operações digitais, oferecendo uma solução rápida e eficiente para empresas que buscam segurança e praticidade.",
+    categoryKey: "products.solutions.vapt.category",
+    descriptionKey: "products.solutions.vapt.description",
 
     imageSrc: "/assets/imgs/produtos/vapt-area.jpeg",
     logoSrc: "/assets/imgs/produtos/logo-vapt.webp",
@@ -59,9 +63,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "XAMA IN BOX",
-    category: "WhatsApp · Atendimento",
-    description:
-      "Plataforma white label para gestão de multiatendimentos via WhatsApp, totalmente personalizável com a marca do cliente.",
+    categoryKey: "products.solutions.xama.category",
+    descriptionKey: "products.solutions.xama.description",
 
     imageSrc: "/assets/imgs/produtos/xama-area.jpeg",
     logoSrc: "/assets/imgs/produtos/logo-xama.webp",
@@ -72,9 +75,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "FligPix",
-    category: "Banco digital · Pagamentos",
-    description:
-      "Plataforma completa de serviços financeiros para escalar a operação da sua empresa com eficiência e tranquilidade.",
+    categoryKey: "products.solutions.fligpix.category",
+    descriptionKey: "products.solutions.fligpix.description",
 
     imageSrc: "/assets/imgs/produtos/fligpix-area.jpeg",
     logoSrc: "/assets/imgs/produtos/logo-fligpix.png",
@@ -85,9 +87,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "Elevex",
-    category: "Plataforma SaaS",
-    description:
-      "Solução SaaS voltada para crescimento operacional, automação de processos e análise estratégica de resultados.",
+    categoryKey: "products.solutions.elevex.category",
+    descriptionKey: "products.solutions.elevex.description",
 
     imageSrc: "/assets/imgs/produtos/elevex-area.jpeg",
     logoSrc: "/assets/imgs/produtos/logo-elevex.webp",
@@ -98,9 +99,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "Solarmaker",
-    category: "Energia · CRM",
-    description:
-      "CRM desenvolvido para operações do setor de energia, organizando leads, equipes, propostas e oportunidades comerciais.",
+    categoryKey: "products.solutions.solarmaker.category",
+    descriptionKey: "products.solutions.solarmaker.description",
 
     imageSrc: "/assets/imgs/produtos/solarMaker-area.jpeg",
     logoSrc: "/assets/imgs/produtos/logo-solarmaker.webp",
@@ -111,9 +111,8 @@ const products: ProductCardProps[] = [
   },
   {
     title: "Startin",
-    category: "Startups · Aceleração",
-    description:
-      "Plataforma para acompanhamento, gestão e aceleração de startups com processos, indicadores e etapas centralizadas.",
+    categoryKey: "products.solutions.startin.category",
+    descriptionKey: "products.solutions.startin.description",
 
     imageSrc: "/assets/imgs/produtos/startin-area.jpeg",
     logoSrc: "/assets/imgs/produtos/logo-startin.webp",
@@ -125,6 +124,7 @@ const products: ProductCardProps[] = [
 ];
 
 export function SolutionsSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="portfolio"
@@ -182,10 +182,10 @@ export function SolutionsSection() {
               xl:text-[58px]
             "
           >
-            <span>Soluções que já estão </span>
+            <span>{t("products.solutions.heading.beforeHighlight")}</span>
 
             <span className="text-[#49c8f2]">
-              em operação
+              {t("products.solutions.heading.highlight")}
             </span>
           </h2>
 
@@ -206,8 +206,7 @@ export function SolutionsSection() {
               xl:text-[20px]
             "
           >
-            Plataformas desenvolvidas pela Global Tech para diferentes
-            segmentos B2B. Clique em qualquer uma para conhecer a fundo.
+            {t("products.solutions.description")}
           </p>
         </div>
 
@@ -230,10 +229,12 @@ export function SolutionsSection() {
             xl:gap-5
           "
         >
-          {products.map((product) => (
+          {products.map(({ categoryKey, descriptionKey, ...product }) => (
             <ProductCard
               key={product.title}
               {...product}
+              category={t(categoryKey)}
+              description={t(descriptionKey)}
             />
           ))}
         </div>

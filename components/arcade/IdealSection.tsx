@@ -2,31 +2,32 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const cards = [
   {
     image: "/assets/imgs/arcade/a-1-scaled.jpg",
-    title: "Salas de entretenimiento",
+    titleKey: "arcade.ideal.card1",
   },
   {
     image: "/assets/imgs/arcade/a-2-scaled.jpg",
-    title: "Espacios privados",
+    titleKey: "arcade.ideal.card2",
   },
   {
     image: "/assets/imgs/arcade/a-3-scaled.jpg",
-    title: "Operaciones híbridas",
+    titleKey: "arcade.ideal.card3",
   },
   {
     image: "/assets/imgs/arcade/a-4-scaled.jpg",
-    title: "Ambientes de acceso",
-    highlight: "controlado",
+    titleKey: "arcade.ideal.card4",
+    highlightKey: "arcade.ideal.card4Highlight",
   },
   {
     image: "/assets/imgs/arcade/a-5-scaled.jpg",
-    title: "Negocios que buscan crecer",
-    highlight: "sin grandes inversiones iniciales",
+    titleKey: "arcade.ideal.card5",
+    highlightKey: "arcade.ideal.card5Highlight",
   },
-];
+] satisfies ReadonlyArray<{ image: string; titleKey: TranslationKey; highlightKey?: TranslationKey }>;
 
 function Card({
   card,
@@ -35,6 +36,7 @@ function Card({
   card: (typeof cards)[number];
   index: number;
 }) {
+  const { t } = useTranslation();
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
@@ -50,7 +52,7 @@ function Card({
       <div className="group relative h-[210px] overflow-hidden rounded-md bg-black md:h-[230px]">
         <Image
           src={card.image}
-          alt={card.title}
+          alt={t(card.titleKey)}
           fill
           sizes="(max-width:768px) 92vw, (max-width:1024px) 45vw, 380px"
           className="object-cover transition duration-500 group-hover:scale-105"
@@ -58,10 +60,10 @@ function Card({
       </div>
 
       <h3 className="mt-5 text-center font-title text-[18px] font-medium leading-[1.25] text-white md:text-[22px]">
-        <span className="block">{card.title}</span>
+        <span className="block">{t(card.titleKey)}</span>
 
-        {card.highlight && (
-          <span className="mt-1 block text-[#FA3E22]">{card.highlight}</span>
+        {card.highlightKey && (
+          <span className="mt-1 block text-[#FA3E22]">{t(card.highlightKey)}</span>
         )}
       </h3>
     </motion.article>
@@ -69,6 +71,7 @@ function Card({
 }
 
 export default function IdealSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="ideal"
@@ -94,15 +97,15 @@ export default function IdealSection() {
           className="text-center"
         >
           <h2 className="font-title text-[36px] font-medium leading-tight md:text-[52px] lg:text-[42px]">
-            <span className="block text-white">Arcade Es</span>
-            <span className="block text-[#FA3E22]">Ideal Para:</span>
+            <span className="block text-white">{t("arcade.ideal.heading.line1")}</span>
+            <span className="block text-[#FA3E22]">{t("arcade.ideal.heading.line2")}</span>
           </h2>
         </motion.div>
 
         <div className="mt-16 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-6">
           {cards.map((card, index) => (
             <div
-              key={card.title}
+              key={card.titleKey}
               className={[
                 "w-full",
                 "lg:col-span-2",

@@ -1,5 +1,8 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import { Space_Grotesk } from "next/font/google";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -9,23 +12,24 @@ const spaceGrotesk = Space_Grotesk({
 const statistics = [
   {
     value: "30 +",
-    label: "ANOS DE MERCADO",
+    labelKey: "products.hero.stat.market",
   },
   {
     value: "9",
-    label: "PRODUTOS NO PORTFÓLIO",
+    labelKey: "products.hero.stat.products",
   },
   {
     value: "6K +",
-    label: "JOGOS INTEGRADOS",
+    labelKey: "products.hero.stat.games",
   },
   {
     value: "99.9%",
-    label: "UPTIME OPERACIONAL",
+    labelKey: "products.hero.stat.uptime",
   },
-];
+] satisfies ReadonlyArray<{ value: string; labelKey: TranslationKey }>;
 
 export function HeroSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="inicio"
@@ -91,13 +95,13 @@ export function HeroSection() {
                 2xl:text-[68px]
               "
             >
-              <span className="block">Tecnologia que</span>
+              <span className="block">{t("products.hero.title.line1")}</span>
 
               <span className="block text-[#91aaf5]">
-                impulsiona
+                {t("products.hero.title.line2")}
               </span>
 
-              <span className="block">negócios digitais</span>
+              <span className="block">{t("products.hero.title.line3")}</span>
             </h1>
 
             <p
@@ -117,9 +121,7 @@ export function HeroSection() {
                 xl:text-[20px]
               "
             >
-              Desenvolvemos e operamos plataformas tecnológicas prontas para
-              escalar, pensadas para empresas B2B que precisam crescer com
-              estabilidade, controle e eficiência operacional.
+              {t("products.hero.description")}
             </p>
 
             <div
@@ -150,7 +152,7 @@ export function HeroSection() {
                   sm:text-[17px]
                 "
               >
-                Fale com nosso time
+                {t("products.hero.primaryCta")}
 
                 <ArrowRight
                   size={23}
@@ -184,7 +186,7 @@ export function HeroSection() {
                   sm:text-[17px]
                 "
               >
-                Ver portfólio
+                {t("products.hero.secondaryCta")}
               </a>
             </div>
           </div>
@@ -202,7 +204,7 @@ export function HeroSection() {
           <div className="grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-4">
             {statistics.map((statistic) => (
               <article
-                key={statistic.label}
+                key={statistic.labelKey}
                 className="
                   flex min-h-[118px]
                   flex-col justify-between
@@ -245,7 +247,7 @@ export function HeroSection() {
                     lg:text-[15px]
                   "
                 >
-                  {statistic.label}
+                  {t(statistic.labelKey)}
                 </span>
               </article>
             ))}

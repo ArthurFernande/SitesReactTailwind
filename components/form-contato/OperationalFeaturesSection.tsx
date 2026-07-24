@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -32,10 +33,10 @@ type Provider = {
 
 type ProductCard = {
   image: string;
-  alt: string;
-  title: string;
-  highlightedTitle: string;
-  description: string;
+  altKey: TranslationKey;
+  titleKey: TranslationKey;
+  highlightedTitleKey: TranslationKey;
+  descriptionKey: TranslationKey;
   providers?: Provider[];
   footerImage?: string;
   footerImageAlt?: string;
@@ -43,18 +44,17 @@ type ProductCard = {
 
 type Feature = {
   icon: LucideIcon;
-  title: string;
-  description: string;
+  titleKey: TranslationKey;
+  descriptionKey: TranslationKey;
 };
 
 const productCards: ProductCard[] = [
   {
     image: `${assetsPath}/cassino.png`,
-    alt: "Jogos de cassino disponíveis na plataforma",
-    title: "Mais de 3.000 jogos",
-    highlightedTitle: "de cassino",
-    description:
-      "Os melhores provedores do mercado com slots, cassino ao vivo, crash, roleta, blackjack.",
+    altKey: "contact.operational.casino.alt",
+    titleKey: "contact.operational.casino.title",
+    highlightedTitleKey: "contact.operational.casino.highlight",
+    descriptionKey: "contact.operational.casino.description",
     providers: [
       {
         image: `${assetsPath}/pragmatic-play-icon.png`,
@@ -75,11 +75,10 @@ const productCards: ProductCard[] = [
   },
   {
     image: `${assetsPath}/GATEWAY.png`,
-    alt: "Gateway de pagamentos com criptomoedas",
-    title: "Gateway de pagamento",
-    highlightedTitle: "com cripto integrado",
-    description:
-      "Pagamentos rápidos, seguros e descentralizados com as melhores criptomoedas do mercado.",
+    altKey: "contact.operational.gateway.alt",
+    titleKey: "contact.operational.gateway.title",
+    highlightedTitleKey: "contact.operational.gateway.highlight",
+    descriptionKey: "contact.operational.gateway.description",
     providers: [
       {
         image: `${assetsPath}/icon01.png`,
@@ -110,80 +109,77 @@ const productCards: ProductCard[] = [
   },
   {
     image: `${assetsPath}/esportivo.png`,
-    alt: "API de esportes Genius Sports",
-    title: "API de esportes da",
-    highlightedTitle: "Genius Sports",
-    description:
-      "A API mais segura e completa do mundo com os melhores mercados e odds competitivas.",
+    altKey: "contact.operational.sports.alt",
+    titleKey: "contact.operational.sports.title",
+    highlightedTitleKey: "contact.operational.sports.highlight",
+    descriptionKey: "contact.operational.sports.description",
     footerImage: `${assetsPath}/genius.png`,
     footerImageAlt: "Genius Sports",
   },
   {
     image: `${assetsPath}/jogo-esportivo.png`,
-    alt: "Sistema de acompanhamento de futebol ao vivo",
-    title: "Jogos de futebol",
-    highlightedTitle: "ao vivo com campinho",
-    description:
-      "Acompanhe cada lance com gráficos ao vivo e estatísticas em tempo real para uma experiência imersiva.",
+    altKey: "contact.operational.live.alt",
+    titleKey: "contact.operational.live.title",
+    highlightedTitleKey: "contact.operational.live.highlight",
+    descriptionKey: "contact.operational.live.description",
   },
   {
     image: `${assetsPath}/INFRAESTRUTURA.png`,
-    alt: "Infraestrutura de banco de dados segura",
-    title: "Banco de dados de",
-    highlightedTitle: "alta performance",
-    description:
-      "Infraestrutura robusta que suporta milhares de jogadores simultaneamente com máxima estabilidade e velocidade.",
+    altKey: "contact.operational.database.alt",
+    titleKey: "contact.operational.database.title",
+    highlightedTitleKey: "contact.operational.database.highlight",
+    descriptionKey: "contact.operational.database.description",
   },
 ];
 
 const primaryFeatures: Feature[] = [
   {
     icon: ShieldCheck,
-    title: "Estrutura de segurança avançada",
-    description: "Proteção completa contra ataques e invasões.",
+    titleKey: "contact.operational.security.title",
+    descriptionKey: "contact.operational.security.description",
   },
   {
     icon: LockKeyhole,
-    title: "Acesso de duas etapas",
-    description: "Mais segurança para sua conta e seus dados.",
+    titleKey: "contact.operational.twoFactor.title",
+    descriptionKey: "contact.operational.twoFactor.description",
   },
   {
     icon: CloudCog,
-    title: "Backup diário automático",
-    description: "Seus dados sempre protegidos e recuperáveis.",
+    titleKey: "contact.operational.backup.title",
+    descriptionKey: "contact.operational.backup.description",
   },
   {
     icon: WalletCards,
-    title: "Uptime de 99,9%",
-    description: "Plataforma sempre disponível para seus usuários.",
+    titleKey: "contact.operational.uptime.title",
+    descriptionKey: "contact.operational.uptime.description",
   },
   {
     icon: Smartphone,
-    title: "Plataforma 100% responsiva",
-    description: "Experiência perfeita em desktop, tablet e mobile.",
+    titleKey: "contact.operational.responsive.title",
+    descriptionKey: "contact.operational.responsive.description",
   },
 ];
 
 const secondaryFeatures: Feature[] = [
   {
     icon: Headphones,
-    title: "Suporte 24/7 especializado",
-    description: "Atendimento rápido e humanizado todos os dias.",
+    titleKey: "contact.operational.support.title",
+    descriptionKey: "contact.operational.support.description",
   },
   {
     icon: BarChart3,
-    title: "Relatórios avançados",
-    description: "Métricas detalhadas para maximizar seus resultados.",
+    titleKey: "contact.operational.reports.title",
+    descriptionKey: "contact.operational.reports.description",
   },
   {
     icon: MonitorSmartphone,
-    title: "Saques rápidos e automáticos",
-    description: "Processos ágeis para mais satisfação dos jogadores.",
+    titleKey: "contact.operational.withdrawals.title",
+    descriptionKey: "contact.operational.withdrawals.description",
   },
   {
     icon: Trophy,
-    title: "Programa de fidelidade",
-    description: "Ferramentas para reter jogadores e aumentar lucratividade.",
+    titleKey: "contact.operational.loyalty.title",
+    descriptionKey: "contact.operational.loyalty.description",
   },
 ];
 
@@ -220,7 +216,7 @@ export function OperationalFeaturesSection() {
             "
           >
             {productCards.map((card) => (
-              <SwiperSlide key={card.title} className="!h-auto">
+              <SwiperSlide key={card.titleKey} className="!h-auto">
                 <ProductCard card={card} />
               </SwiperSlide>
             ))}
@@ -242,7 +238,7 @@ export function OperationalFeaturesSection() {
           "
         >
           {productCards.map((card) => (
-            <ProductCard key={card.title} card={card} />
+            <ProductCard key={card.titleKey} card={card} />
           ))}
         </div>
 
@@ -271,7 +267,7 @@ export function OperationalFeaturesSection() {
           >
             {primaryFeatures.map((feature, index) => (
               <FeatureItem
-                key={feature.title}
+                key={feature.titleKey}
                 feature={feature}
                 showDesktopDivider={index !== primaryFeatures.length - 1}
               />
@@ -302,7 +298,7 @@ export function OperationalFeaturesSection() {
           >
             {secondaryFeatures.map((feature, index) => (
               <FeatureItem
-                key={feature.title}
+                key={feature.titleKey}
                 feature={feature}
                 showDesktopDivider={index !== secondaryFeatures.length - 1}
               />
@@ -319,6 +315,7 @@ type ProductCardProps = {
 };
 
 function ProductCard({ card }: ProductCardProps) {
+  const { t } = useTranslation();
   return (
     <article
       className="
@@ -354,7 +351,7 @@ function ProductCard({ card }: ProductCardProps) {
       >
         <Image
           src={card.image}
-          alt={card.alt}
+          alt={t(card.altKey)}
           fill
           sizes="
             (max-width: 767px) 86vw,
@@ -402,11 +399,11 @@ function ProductCard({ card }: ProductCardProps) {
             2xl:text-[16px]
           "
         >
-          {card.title}
+          {t(card.titleKey)}
 
           <br />
 
-          <span className="text-[#8d8fff]">{card.highlightedTitle}</span>
+          <span className="text-[#8d8fff]">{t(card.highlightedTitleKey)}</span>
         </h3>
       </div>
 
@@ -428,7 +425,7 @@ function ProductCard({ card }: ProductCardProps) {
           2xl:text-[14px]
         "
       >
-        {card.description}
+        {t(card.descriptionKey)}
       </p>
 
       {card.providers && (
@@ -504,6 +501,7 @@ type FeatureItemProps = {
 };
 
 function FeatureItem({ feature, showDesktopDivider }: FeatureItemProps) {
+  const { t } = useTranslation();
   const Icon = feature.icon;
 
   return (
@@ -559,7 +557,7 @@ function FeatureItem({ feature, showDesktopDivider }: FeatureItemProps) {
             2xl:text-[12px]
           "
         >
-          {feature.title}
+          {t(feature.titleKey)}
         </h3>
       </div>
 
@@ -577,7 +575,7 @@ function FeatureItem({ feature, showDesktopDivider }: FeatureItemProps) {
           2xl:text-[12px]
         "
       >
-        {feature.description}
+        {t(feature.descriptionKey)}
       </p>
     </article>
   );

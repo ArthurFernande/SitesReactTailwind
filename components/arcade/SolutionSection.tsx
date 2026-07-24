@@ -8,27 +8,29 @@ import {
   MonitorSmartphone,
   ChartColumn,
 } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const items = [
   {
     icon: Zap,
-    label: "Plataforma lista para operar",
+    labelKey: "arcade.solution.item1",
   },
   {
     icon: ClipboardList,
-    label: "Gestión simple y organizada",
+    labelKey: "arcade.solution.item2",
   },
   {
     icon: MonitorSmartphone,
-    label: "Experiencia moderna para el usuario final",
+    labelKey: "arcade.solution.item3",
   },
   {
     icon: ChartColumn,
-    label: "Enfoque total en la marca y el crecimiento del negocio",
+    labelKey: "arcade.solution.item4",
   },
-];
+] satisfies ReadonlyArray<{ icon: typeof Zap; labelKey: TranslationKey }>;
 
 export default function SolutionSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="solucoes"
@@ -52,17 +54,16 @@ export default function SolutionSection() {
           viewport={{ once: true, amount: 0.25 }}
         >
           <h2 className="font-title text-[36px] font-medium leading-tight md:text-[52px] lg:text-[42px]">
-            <span className="block text-white">Una Solución Pensada</span>
+            <span className="block text-white">{t("arcade.solution.heading.line1")}</span>
             <span className="block text-[#FA3E22]">
-              Para operar sin fricciones
+              {t("arcade.solution.heading.line2")}
             </span>
           </h2>
 
           <p className="mx-auto mt-8 max-w-[1040px] font-body text-[22px] font-medium leading-[1.25] text-white md:text-[30px] lg:text-[26px]">
-            Arcade fue diseñado para empresas que desean ampliar su oferta de
-            entretenimiento{" "}
+            {t("arcade.solution.description.beforeHighlight")}
             <span className="text-[#FA3E22]">
-              sin complicaciones técnicas ni inversiones iniciales elevadas.
+              {t("arcade.solution.description.highlight")}
             </span>
           </p>
         </motion.div>
@@ -73,7 +74,7 @@ export default function SolutionSection() {
 
             return (
               <motion.div
-                key={item.label}
+                key={item.labelKey}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{
@@ -89,7 +90,7 @@ export default function SolutionSection() {
                 </div>
 
                 <strong className="mt-5 max-w-[210px] font-body text-[16px] font-extrabold leading-[1.35] text-white md:text-[18px] lg:text-[17px]">
-                  {item.label}
+                  {t(item.labelKey)}
                 </strong>
               </motion.div>
             );
@@ -103,9 +104,9 @@ export default function SolutionSection() {
           viewport={{ once: true, amount: 0.35 }}
           className="mx-auto mt-16 max-w-[800px] font-body text-[24px] font-medium leading-[1.35] text-white md:text-[32px] lg:text-[28px]"
         >
-          <p>Mientras usted gestiona la operación,</p>
+          <p>{t("arcade.solution.closing.line1")}</p>
           <p className="mt-4 text-[#FA3E22]">
-            Global Tech se encarga de la tecnología.
+            {t("arcade.solution.closing.line2")}
           </p>
         </motion.div>
       </div>

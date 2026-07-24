@@ -2,28 +2,28 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const cards = [
   {
-    title: "Plataformas Digitales",
-    description:
-      "Soluciones listas para operar, con arquitectura moderna y escalable.",
+    titleKey: "home.solutions.digital.title",
+    descriptionKey: "home.solutions.digital.description",
     image: "/assets/imgs/gtech/image01-s2.jpg",
   },
   {
-    title: "Infraestructura Tecnológica",
-    description:
-      "Estabilidad, seguridad y performance para operaciones críticas.",
+    titleKey: "home.solutions.infrastructure.title",
+    descriptionKey: "home.solutions.infrastructure.description",
     image: "/assets/imgs/gtech/image02-s2.jpg",
   },
   {
-    title: "Modelos White Label",
-    description: "Tecnología adaptable a su marca, mercado y estrategia.",
+    titleKey: "home.solutions.whiteLabel.title",
+    descriptionKey: "home.solutions.whiteLabel.description",
     image: "/assets/imgs/gtech/image03-s2.jpg",
   },
-];
+] satisfies ReadonlyArray<{ titleKey: TranslationKey; descriptionKey: TranslationKey; image: string }>;
 
 export default function SolutionsSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="solucoes"
@@ -48,16 +48,14 @@ export default function SolutionsSection() {
           className="mx-auto max-w-[1180px] text-center"
         >
           <h2 className="font-title text-[36px] font-medium leading-tight text-white md:text-[52px] lg:text-[42px]">
-            Soluciones tecnológicas{" "}
-            <span className="text-[#FA3E22]">Diseñadas para crecer</span>
+            {t("home.solutions.heading.line1")}{" "}
+            <span className="text-[#FA3E22]">{t("home.solutions.heading.line2")}</span>
           </h2>
 
           <p className="font-body mx-auto mt-8 max-w-[1120px] text-[21px] leading-[1.55] text-white md:text-[24px]">
-            Global Tech actúa como proveedor de tecnología para empresas que
-            operan en entornos digitales exigentes,{" "}
+            {t("home.solutions.description.line1")}{" "}
             <span className="text-[#FA3E22]">
-              ofreciendo plataformas robustas, soporte continuo y modelos de
-              crecimiento sostenible.
+              {t("home.solutions.description.line2")}
             </span>
           </p>
         </motion.div>
@@ -65,7 +63,7 @@ export default function SolutionsSection() {
         <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((card, index) => (
             <motion.article
-              key={card.title}
+              key={card.titleKey}
               initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
@@ -79,7 +77,7 @@ export default function SolutionsSection() {
               <div className="relative h-[230px] w-full">
                 <Image
                   src={card.image}
-                  alt={card.title}
+                  alt={t(card.titleKey)}
                   fill
                   sizes="(max-width: 768px) 92vw, (max-width: 1024px) 45vw, 33vw"
                   className="object-cover"
@@ -89,11 +87,11 @@ export default function SolutionsSection() {
 
               <div className="flex flex-col px-6 pb-7 pt-0">
                 <h3 className="font-title relative z-10 -mt-16 min-h-[88px] text-[25px] font-bold leading-[1.35] text-[#FA3E22] md:min-h-[78px] md:text-[24px]">
-                  {card.title}
+                  {t(card.titleKey)}
                 </h3>
 
                 <p className="font-body mt-4 text-[21px] leading-[1.45] text-white md:text-[18px]">
-                  {card.description}
+                  {t(card.descriptionKey)}
                 </p>
               </div>
             </motion.article>

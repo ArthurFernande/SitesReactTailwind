@@ -3,27 +3,29 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Headset, MonitorCog, Network, RefreshCcw } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const items = [
   {
     icon: Headset,
-    text: "Estabilidad y mantenimiento del sistema",
+    textKey: "arcade.delivery.item1",
   },
   {
     icon: MonitorCog,
-    text: "Soporte operativo de la infraestructura",
+    textKey: "arcade.delivery.item2",
   },
   {
     icon: Network,
-    text: "Gestión integral de la plataforma",
+    textKey: "arcade.delivery.item3",
   },
   {
     icon: RefreshCcw,
-    text: "Actualizaciones y mejoras continuas",
+    textKey: "arcade.delivery.item4",
   },
-];
+] satisfies ReadonlyArray<{ icon: typeof Headset; textKey: TranslationKey }>;
 
 export default function GTechDeliverySection() {
+  const { t } = useTranslation();
   return (
     <section
       id="sobre"
@@ -62,14 +64,14 @@ export default function GTechDeliverySection() {
           className="order-2 lg:order-1 text-center lg:text-left"
         >
           <h2 className="font-title text-[38px] font-medium leading-tight md:text-[56px] lg:text-[46px]">
-            <span className="block text-white">Qué entrega</span>
-            <span className="block text-[#FA3E22]">GTech?</span>
+            <span className="block text-white">{t("arcade.delivery.heading.line1")}</span>
+            <span className="block text-[#FA3E22]">{t("arcade.delivery.heading.line2")}</span>
           </h2>
 
           <p className="mx-auto mt-8 max-w-[560px] font-body text-[20px] font-medium leading-[1.55] text-white md:text-[24px] lg:mx-0 lg:text-[22px]">
-            Global Tech actúa exclusivamente como{" "}
+            {t("arcade.delivery.description.beforeHighlight")}
             <span className="text-[#FA3E22]">
-              proveedor tecnológico, garantizando:
+              {t("arcade.delivery.description.highlight")}
             </span>
           </p>
 
@@ -79,7 +81,7 @@ export default function GTechDeliverySection() {
 
               return (
                 <motion.div
-                  key={item.text}
+                  key={item.textKey}
                   initial={{ opacity: 0, x: -28 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{
@@ -98,7 +100,7 @@ export default function GTechDeliverySection() {
                   </div>
 
                   <p className="font-body text-[18px] font-bold leading-snug text-white md:text-[22px] lg:text-[19px]">
-                    {item.text}
+                    {t(item.textKey)}
                   </p>
                 </motion.div>
               );

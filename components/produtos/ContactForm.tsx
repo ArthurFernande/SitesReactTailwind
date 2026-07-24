@@ -5,6 +5,7 @@ import {
   type ChangeEvent,
   type FormEvent,
 } from "react";
+import { useTranslation } from "@/components/traducaoButtons";
 
 import {
   contactSchema,
@@ -72,6 +73,7 @@ function maskPhone(value: string) {
 }
 
 export function ContactForm() {
+  const { t } = useTranslation();
   const [formData, setFormData] =
     useState<ContactFormData>(initialFormData);
 
@@ -122,19 +124,19 @@ export function ContactForm() {
     const formattedErrors: FormErrors = {};
 
     if (fieldErrors.nome?.[0]) {
-      formattedErrors.nome = fieldErrors.nome[0];
+      formattedErrors.nome = t("products.form.validation.name");
     }
 
     if (fieldErrors.telefone?.[0]) {
-      formattedErrors.telefone = fieldErrors.telefone[0];
+      formattedErrors.telefone = t("products.form.validation.phone");
     }
 
     if (fieldErrors.email?.[0]) {
-      formattedErrors.email = fieldErrors.email[0];
+      formattedErrors.email = t("products.form.validation.email");
     }
 
     if (fieldErrors.mensagem?.[0]) {
-      formattedErrors.mensagem = fieldErrors.mensagem[0];
+      formattedErrors.mensagem = t("products.form.validation.message");
     }
 
     return formattedErrors;
@@ -182,8 +184,7 @@ export function ContactForm() {
 
       if (!response.ok) {
         throw new Error(
-          responseData?.message ??
-            "Não foi possível enviar sua mensagem.",
+          t("products.form.submitError"),
         );
       }
 
@@ -191,8 +192,7 @@ export function ContactForm() {
       setSubmitStatus("success");
 
       setSubmitMessage(
-        responseData?.message ??
-          "Mensagem enviada com sucesso.",
+        t("products.form.submitSuccess"),
       );
     } catch (error) {
       console.error("Erro no formulário de produtos:", error);
@@ -202,7 +202,7 @@ export function ContactForm() {
       setSubmitMessage(
         error instanceof Error
           ? error.message
-          : "Não foi possível enviar sua mensagem. Tente novamente.",
+          : t("products.form.submitErrorRetry"),
       );
     } finally {
       setIsSubmitting(false);
@@ -236,7 +236,7 @@ export function ContactForm() {
           htmlFor="contact-name"
           className="mb-2.5 block text-xs font-bold uppercase tracking-tight text-white"
         >
-          Nome <span className="text-[#ff5263]">*</span>
+          {t("products.form.name")} <span className="text-[#ff5263]">*</span>
         </label>
 
         <input
@@ -272,7 +272,7 @@ export function ContactForm() {
           htmlFor="contact-phone"
           className="mb-2.5 block text-xs font-bold uppercase tracking-tight text-white"
         >
-          Telefone{" "}
+          {t("products.form.phone")}{" "}
           <span className="text-[#ff5263]">*</span>
         </label>
 
@@ -290,7 +290,7 @@ export function ContactForm() {
           disabled={isSubmitting}
           inputMode="numeric"
           autoComplete="tel"
-          placeholder="(00) 00000-0000"
+          placeholder={t("products.form.phonePlaceholder")}
           aria-invalid={Boolean(errors.telefone)}
           aria-describedby={
             errors.telefone
@@ -318,7 +318,7 @@ export function ContactForm() {
           htmlFor="contact-email"
           className="mb-2.5 block text-xs font-bold uppercase tracking-tight text-white"
         >
-          E-mail{" "}
+          {t("products.form.email")}{" "}
           <span className="text-[#ff5263]">*</span>
         </label>
 
@@ -356,7 +356,7 @@ export function ContactForm() {
           htmlFor="contact-message"
           className="mb-2.5 block text-xs font-bold uppercase tracking-tight text-white"
         >
-          Mensagem{" "}
+          {t("products.form.message")}{" "}
           <span className="text-[#ff5263]">*</span>
         </label>
 
@@ -437,7 +437,7 @@ export function ContactForm() {
           disabled:opacity-60
         "
       >
-        {isSubmitting ? "Enviando..." : "Enviar"}
+        {t(isSubmitting ? "products.form.submitting" : "products.form.submit")}
       </button>
 
       {submitStatus === "success" && (

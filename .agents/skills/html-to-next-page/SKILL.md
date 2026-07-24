@@ -11,7 +11,7 @@ Tratar o HTML informado como fonte da verdade visual e funcional. Usar o reposit
 
 Identificar:
 
-- arquivo HTML de origem;
+- arquivo HTML de origem;0
 - nome da página;
 - slug da rota;
 - elementos solicitados para remoção;

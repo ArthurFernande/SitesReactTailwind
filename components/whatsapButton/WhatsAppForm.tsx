@@ -11,38 +11,42 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { z } from "zod";
-import { useTranslation } from "../traducaoButtons";
+import { useTranslation, type TranslationKey } from "../traducaoButtons";
 
-const leadSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Digite pelo menos 2 caracteres.")
-    .max(100, "O nome deve ter no máximo 100 caracteres."),
+type Translate = ReturnType<typeof useTranslation>["t"];
 
-  email: z
-    .string()
-    .trim()
-    .min(1, "Digite seu e-mail corporativo.")
-    .email("Digite um e-mail válido."),
+function createLeadSchema(t: Translate) {
+  return z.object({
+    name: z
+      .string()
+      .trim()
+      .min(2, t("whatsapp.validation.nameMin"))
+      .max(100, t("whatsapp.validation.nameMax")),
 
-  phone: z.string().refine(
-    (value) => {
-      const digits = value.replace(/\D/g, "");
+    email: z
+      .string()
+      .trim()
+      .min(1, t("whatsapp.validation.emailRequired"))
+      .email(t("whatsapp.validation.emailInvalid")),
 
-      return digits.length === 10 || digits.length === 11;
-    },
-    {
-      message: "Digite um telefone válido com DDD.",
-    },
-  ),
+    phone: z.string().refine(
+      (value) => {
+        const digits = value.replace(/\D/g, "");
 
-  employees: z.enum(["1-10", "11-50", "51-100", "100+"], {
-    message: "Selecione a quantidade de funcionários.",
-  }),
-});
+        return digits.length === 10 || digits.length === 11;
+      },
+      {
+        message: t("whatsapp.validation.phoneInvalid"),
+      },
+    ),
 
-type LeadFormData = z.infer<typeof leadSchema>;
+    employees: z.enum(["1-10", "11-50", "51-100", "100+"], {
+      message: t("whatsapp.validation.employeesRequired"),
+    }),
+  });
+}
+
+type LeadFormData = z.infer<ReturnType<typeof createLeadSchema>>;
 type FieldName = keyof LeadFormData;
 type FormErrors = Partial<Record<FieldName, string>>;
 
@@ -57,46 +61,24 @@ type Step = {
   placeholder?: string;
 };
 
-const steps: Step[] = [
-  {
-    field: "name",
-    question: "Olá! Para começar, como você se chama?",
-    placeholder: "Digite seu nome",
-  },
-  {
-    field: "email",
-    question: "Qual é o seu e-mail corporativo?",
-    placeholder: "nome@empresa.com.br",
-  },
-  {
-    field: "phone",
-    question: "Qual é o seu número de telefone?",
-    placeholder: "(00) 00000-0000",
-  },
-  {
-    field: "employees",
-    question: "Por fim, quantos funcionários sua empresa possui?",
-  },
-];
-
 const employeeOptions: Array<{
-  label: string;
+  labelKey: TranslationKey;
   value: LeadFormData["employees"];
 }> = [
   {
-    label: "1 a 10",
+    labelKey: "whatsapp.employee1",
     value: "1-10",
   },
   {
-    label: "11 a 50",
+    labelKey: "whatsapp.employee2",
     value: "11-50",
   },
   {
-    label: "51 a 100",
+    labelKey: "whatsapp.employee3",
     value: "51-100",
   },
   {
-    label: "Mais de 100",
+    labelKey: "whatsapp.employee4",
     value: "100+",
   },
 ];
@@ -110,6 +92,7 @@ const initialFormData: LeadFormData = {
 
 export function WhatsAppForm({ isOpen, onClose }: WhatsAppFormProps) {
   const { t } = useTranslation();
+  const leadSchema = createLeadSchema(t);
   const translatedSteps: Step[] = [
     { field: "name", question: t("whatsapp.nameQuestion"), placeholder: t("whatsapp.namePlaceholder") },
     { field: "email", question: t("whatsapp.emailQuestion"), placeholder: t("whatsapp.emailPlaceholder") },
@@ -176,7 +159,7 @@ export function WhatsAppForm({ isOpen, onClose }: WhatsAppFormProps) {
     if (!result.success) {
       setErrors((previous) => ({
         ...previous,
-        [currentField]: result.error.issues[0]?.message ?? "Campo inválido.",
+        [currentField]: result.error.issues[0]?.message ?? t("whatsapp.invalidField"),
       }));
 
       return false;
@@ -263,15 +246,13 @@ export function WhatsAppForm({ isOpen, onClose }: WhatsAppFormProps) {
      const responseData = await response.json().catch(() => null);
 
      if (!response.ok || !responseData?.success) {
-       throw new Error(
-         responseData?.message || "Não foi possível cadastrar o lead.",
-       );
+       throw new Error(t("whatsapp.submitError"));
      }
 
      setIsTyping(false);
      setIsFinished(true);
 
-     const whatsappNumber = "5599999999999";
+     const whatsappNumber = "59897859466";
 
      const message = t("whatsapp.redirectMessage").replace("{name}", result.data.name);
 
@@ -286,7 +267,7 @@ export function WhatsAppForm({ isOpen, onClose }: WhatsAppFormProps) {
      const errorMessage =
        error instanceof Error
          ? error.message
-         : "Não foi possível enviar seus dados. Tente novamente.";
+         : t("whatsapp.submitError");
 
      setIsTyping(false);
 
@@ -458,7 +439,7 @@ export function WhatsAppForm({ isOpen, onClose }: WhatsAppFormProps) {
 
                 {hasAnswered && (
                   <UserAnswer
-                    value={getAnswerLabel(step.field, formData[step.field])}
+                    value={getAnswerLabel(step.field, formData[step.field], t)}
                   />
                 )}
 
@@ -546,7 +527,7 @@ export function WhatsAppForm({ isOpen, onClose }: WhatsAppFormProps) {
                                 }
                               `}
                             >
-                              {option.label}
+                              {t(option.labelKey)}
 
                               {isSelected && (
                                 <span
@@ -628,7 +609,7 @@ export function WhatsAppForm({ isOpen, onClose }: WhatsAppFormProps) {
                 type="button"
                 onClick={handlePrevious}
                 disabled={isTyping || isSubmitting}
-                aria-label="Voltar"
+                aria-label={t("whatsapp.back")}
                 className="
                   flex h-11 w-11 shrink-0
                   items-center justify-center
@@ -763,6 +744,8 @@ function UserAnswer({ value }: { value: string }) {
 }
 
 function TypingMessage() {
+  const { t } = useTranslation();
+
   return (
     <div className="flex items-end gap-2">
       <div
@@ -778,7 +761,7 @@ function TypingMessage() {
       </div>
 
       <div
-        aria-label="Consultor digitando"
+        aria-label={t("whatsapp.typing")}
         className="
           flex h-11 items-center gap-1.5
           rounded-2xl rounded-bl-md
@@ -822,12 +805,10 @@ function TypingMessage() {
   );
 }
 
-function getAnswerLabel(field: FieldName, value: LeadFormData[FieldName]) {
+function getAnswerLabel(field: FieldName, value: LeadFormData[FieldName], t: Translate) {
   if (field === "employees") {
-    return (
-      employeeOptions.find((option) => option.value === value)?.label ??
-      String(value)
-    );
+    const option = employeeOptions.find((item) => item.value === value);
+    return option ? t(option.labelKey) : String(value);
   }
 
   return String(value);

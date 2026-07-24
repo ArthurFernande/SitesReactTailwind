@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nova tradução de página"
+  short_description: "Prepare novas páginas para tradução pt-BR/es"
+  default_prompt: "Use $new-tradution para preparar uma nova rota deste projeto para o sistema atual de tradução pt-BR/es, sem adicionar TraducaoButtons."

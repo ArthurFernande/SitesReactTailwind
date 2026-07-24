@@ -12,6 +12,10 @@ app/
   arcade/page.tsx            rota `/arcade`
   form-contato/page.tsx      rota `/form-contato`
   produtos/page.tsx          rota `/produtos`
+  pagina-game/page.tsx       rota `/pagina-game`
+  global-gaming-erp/page.tsx rota `/global-gaming-erp`
+  gaming-legacy-erp/page.tsx rota `/gaming-legacy-erp`
+  politica-de-privacidad/    rota `/politica-de-privacidad`
   api/
     arcade-lead/route.ts
     form-contato/route.ts
@@ -23,7 +27,7 @@ components/
   arcade/                    seções e formulário da página Arcade
   form-contato/              seções e formulário da página de contato
   produtos/                  seções, formulário, schema e Header/Footer próprios
-  traducaoButtons/           provider, hook, tipos e traduções compartilhados
+  traducaoButtons/           provider, seletor, hook, tipos e catálogos por rota
   whatsapButton/             botão e formulário de WhatsApp
 public/assets/
   imgs/{arcade,form-contato,global-gaming-erp,gtech,layout,produtos}/
@@ -48,8 +52,22 @@ public/assets/
 | `/arcade` | `Header`, seções em `components/arcade/`, `Footer` |
 | `/form-contato` | seções em `components/form-contato/` e `WhatsAppButton` |
 | `/produtos` | `components/produtos/Header`, `HeroSection`, `DifferencesSection`, `SolutionsSection`, `ContactSection`, `Footer` |
+| `/pagina-game` | seções em `components/pagina-game/` |
+| `/global-gaming-erp` | seções em `components/global-gaming-erp/` |
+| `/gaming-legacy-erp` | seções em `components/gaming-legacy-erp/` |
+| `/politica-de-privacidad` | `PrivacyPolicyContent` em `components/politica-de-privacidad/` |
 
 As APIs recebem formulários por `POST`. As rotas de Arcade e WhatsApp enviam primeiro ao CRM e agendam o envio secundário ao n8n; Produtos valida a entrada com `contactSchema` (Zod) e encaminha ao CRM. Variáveis de ambiente controlam URLs e token do CRM.
+
+## Tradução e idioma por rota
+
+- Existe um único `TranslationProvider`, montado em `app/layout.tsx`. Componentes traduzíveis consomem a API pública `{ language, setLanguage, t }` por `useTranslation()`.
+- Os catálogos tipados ficam em `components/traducaoButtons/translations/`, com conteúdo específico em `translations/pages/`. Toda chave existe em `pt-BR` e `es`; a paridade é verificada pelo TypeScript.
+- O idioma original de cada rota é declarado em `translations/pageDefaultLanguages.ts`. A preferência do usuário é persistida separadamente como `site-language:<pathname>` e nunca é lida durante a renderização do servidor.
+- `TraducaoButtons` apenas altera o contexto compartilhado. Atualmente ele é renderizado exclusivamente no Header de `/produtos`, nas variantes desktop e mobile; as demais rotas já consomem o mesmo catálogo e podem receber o seletor futuramente sem criar outro provider.
+- Não se usa tradução direta do DOM, `MutationObserver`, `innerHTML`, serviços externos ou estado de idioma por seção.
+- `npm run validate:translations` verifica chaves literais usadas por `t()`, duplicações no mesmo objeto de catálogo e emite um relatório de candidatos a strings visíveis fixas para revisão manual. Nomes de marcas, valores, código e termos técnicos exibidos podem aparecer no relatório e devem ser revisados, não substituídos automaticamente.
+- Após `npm run build`, `npm run validate:translations:browser` inicia o servidor de produção e usa Chrome/Edge headless para conferir idiomas padrão, preferência por rota, seletor desktop/mobile, preservação de input, Console, Network e overflow nas larguras 320, 375, 430, 768, 1024, 1280 e 1440 px. O caminho do navegador pode ser informado por `BROWSER_PATH`.
 
 ## Assets
 

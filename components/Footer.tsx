@@ -1,6 +1,9 @@
 "use client";
 
+import { useTranslation } from "@/components/traducaoButtons";
+
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="border-t border-white/10 bg-[#17181D]">
       <div className="mx-auto flex w-[min(1320px,92%)] flex-col items-center justify-between gap-5 py-6 text-center lg:flex-row lg:text-left">
@@ -11,13 +14,13 @@ export default function Footer() {
           </span>
 
           <span className="font-body mb-[3px] text-[16px] text-white/55 md:text-[18px]">
-            by Global Tech International
+            {t("arcade.footer.byline")}
           </span>
         </div>
 
         {/* Copyright */}
         <p className="font-body text-[15px] text-[#8E8FA8] md:text-[18px]">
-          © 2026 Global Tech International. Todos los derechos reservados.
+          {t("arcade.footer.copyright")}
         </p>
       </div>
     </footer>

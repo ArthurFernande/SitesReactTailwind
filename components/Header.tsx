@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { MouseEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "@/components/traducaoButtons";
 
 type NavItem = {
   label: string;
@@ -18,30 +19,35 @@ type HeaderProps = {
   logoAlt?: string;
 };
 
-const defaultLeftItems = [
-  { label: "Home", href: "#home" },
-  { label: "Soluções", href: "#solucoes" },
-];
-
-const defaultRightItems = [
-  { label: "Sobre a Global Tech", href: "#sobre" },
-  { label: "Contato", href: "#contato" },
-];
-
 export default function Header({
-  leftItems = defaultLeftItems,
-  rightItems = defaultRightItems,
+  leftItems,
+  rightItems,
   logoSrc = "/assets/imgs/layout/logo.png",
   logoAlt = "Global Tech",
 }: HeaderProps) {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#home");
   const isManualScrolling = useRef(false);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  const resolvedLeftItems = useMemo(
+    () => leftItems ?? [
+      { label: t("header.home"), href: "#home" },
+      { label: t("header.solutions"), href: "#solucoes" },
+    ],
+    [leftItems, t],
+  );
+  const resolvedRightItems = useMemo(
+    () => rightItems ?? [
+      { label: t("header.about"), href: "#sobre" },
+      { label: t("header.contact"), href: "#contato" },
+    ],
+    [rightItems, t],
+  );
   const navItems = useMemo(
-    () => [...leftItems, ...rightItems],
-    [leftItems, rightItems],
+    () => [...resolvedLeftItems, ...resolvedRightItems],
+    [resolvedLeftItems, resolvedRightItems],
   );
 
   useEffect(() => {
@@ -139,7 +145,7 @@ export default function Header({
       <header className="fixed left-0 top-0 z-50 w-full border-2 border-[#5950B8] bg-[#17181D]">
         <div className="relative mx-auto flex h-24 w-full max-w-[1800px] items-center justify-between px-6 md:px-10 lg:px-16">
           <nav className="hidden flex-1 items-center justify-center gap-14 lg:flex">
-            {leftItems.map((item) => (
+            {resolvedLeftItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
@@ -167,7 +173,7 @@ export default function Header({
           </a>
 
           <nav className="hidden flex-1 items-center justify-center gap-14 lg:flex">
-            {rightItems.map((item) => (
+            {resolvedRightItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
@@ -184,7 +190,7 @@ export default function Header({
             type="button"
             onClick={() => setIsOpen((prev) => !prev)}
             className="ml-auto flex h-12 w-12 items-center justify-center rounded-md border border-[#5950B8] text-white transition hover:border-[#FA3E22] hover:bg-[#FA3E22]/10 hover:text-[#FA3E22] lg:hidden"
-            aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+            aria-label={t(isOpen ? "header.closeMenu" : "header.openMenu")}
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

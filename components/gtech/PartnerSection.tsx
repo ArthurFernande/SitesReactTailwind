@@ -8,27 +8,29 @@ import {
   RefreshCcw,
   ServerCog,
 } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const items = [
   {
     icon: Layers,
-    text: "Desarrollo y gestión de plataformas",
+    textKey: "home.partner.item1",
   },
   {
     icon: ChartNoAxesCombined,
-    text: "Soporte técnico y operacional continuo",
+    textKey: "home.partner.item2",
   },
   {
     icon: RefreshCcw,
-    text: "Actualizaciones, mejoras y evolución constante",
+    textKey: "home.partner.item3",
   },
   {
     icon: ServerCog,
-    text: "Enfoque total en estabilidad y escalabilidad",
+    textKey: "home.partner.item4",
   },
-];
+] satisfies ReadonlyArray<{ icon: typeof Layers; textKey: TranslationKey }>;
 
 export default function PartnerSection() {
+  const { t } = useTranslation();
   return (
     <section id="sobre" className="relative overflow-hidden bg-[#070B1A] py-20 md:py-24">
       <Image
@@ -51,7 +53,7 @@ export default function PartnerSection() {
         >
           <Image
             src="/assets/imgs/gtech/homem.png"
-            alt="Operador tecnológico Global Tech"
+            alt={t("home.partner.imageAlt")}
             fill
             sizes="(max-width: 1024px) 92vw, 50vw"
             className="object-contain object-center"
@@ -66,9 +68,9 @@ export default function PartnerSection() {
           className="order-2 text-center lg:order-1 lg:text-left"
         >
           <h2 className="font-title text-[36px] font-medium leading-tight text-white md:text-[52px] lg:text-[42px]">
-            Un Socio Tecnológico,
+            {t("home.partner.heading.line1")}
             <br />
-            <span className="text-[#FA3E22]">No solo un proveedor</span>
+            <span className="text-[#FA3E22]">{t("home.partner.heading.line2")}</span>
           </h2>
 
           <div className="mt-10 grid gap-7 md:grid-cols-2 lg:mt-14 lg:flex lg:flex-col lg:gap-10">
@@ -77,7 +79,7 @@ export default function PartnerSection() {
 
               return (
                 <motion.div
-                  key={item.text}
+                  key={item.textKey}
                   initial={{ opacity: 0, y: 25 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{
@@ -97,7 +99,7 @@ export default function PartnerSection() {
                   </div>
 
                   <p className="font-body text-[16px] font-bold leading-[1.35] text-white md:text-[18px] lg:max-w-[620px] lg:text-[24px] lg:leading-[1.45]">
-                    {item.text}
+                    {t(item.textKey)}
                   </p>
                 </motion.div>
               );

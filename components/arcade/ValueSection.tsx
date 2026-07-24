@@ -2,31 +2,33 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const cards = [
   {
     image: "/assets/imgs/arcade/p-1-scaled.jpg",
-    title: "Operación en ambientes",
-    highlight: "controlados",
+    titleKey: "arcade.value.card1.title",
+    highlightKey: "arcade.value.card1.highlight",
   },
   {
     image: "/assets/imgs/arcade/p-2-scaled.jpg",
-    title: "Experiencia digital",
-    highlight: "moderna y estable",
+    titleKey: "arcade.value.card2.title",
+    highlightKey: "arcade.value.card2.highlight",
   },
   {
     image: "/assets/imgs/arcade/p-3-scaled.jpg",
-    title: "Estructura escalable,",
-    highlight: "preparada para crecer",
+    titleKey: "arcade.value.card3.title",
+    highlightKey: "arcade.value.card3.highlight",
   },
   {
     image: "/assets/imgs/arcade/p-4-scaled.jpg",
-    title: "Modelo profesional",
-    highlight: "orientado al mercado B2B",
+    titleKey: "arcade.value.card4.title",
+    highlightKey: "arcade.value.card4.highlight",
   },
-];
+] satisfies ReadonlyArray<{ image: string; titleKey: TranslationKey; highlightKey: TranslationKey }>;
 
 export default function ValueSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="valor"
@@ -51,15 +53,14 @@ export default function ValueSection() {
           className="text-center"
         >
           <h2 className="font-title text-[36px] font-medium leading-tight md:text-[52px] lg:text-[42px]">
-            <span className="text-white">Propuesta </span>
-            <span className="text-[#FA3E22]">de Valor</span>
+            <span className="text-white">{t("arcade.value.heading.line1")}</span>
+            <span className="text-[#FA3E22]">{t("arcade.value.heading.line2")}</span>
           </h2>
 
           <p className="mx-auto mt-7 max-w-[1080px] font-body text-[20px] font-medium leading-[1.25] text-white md:text-[28px] lg:text-[23px]">
-            El mercado exige experiencias de entretenimiento cada vez más
-            atractivas,{" "}
+            {t("arcade.value.description.beforeHighlight")}
             <span className="text-[#FA3E22]">
-              pero con control, seguridad y eficiencia operativa.
+              {t("arcade.value.description.highlight")}
             </span>
           </p>
         </motion.div>
@@ -67,7 +68,7 @@ export default function ValueSection() {
         <div className="mt-14 grid gap-8 md:grid-cols-2 lg:mt-16 lg:gap-9">
           {cards.map((card, index) => (
             <motion.article
-              key={card.highlight}
+              key={card.highlightKey}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{
@@ -89,8 +90,8 @@ export default function ValueSection() {
 
               <div className="absolute bottom-6 left-5 right-5">
                 <h3 className="font-title text-[20px] font-medium leading-[1.08] text-white md:text-[22px]">
-                  <span className="block">{card.title}</span>
-                  <span className="block text-[#FA3E22]">{card.highlight}</span>
+                  <span className="block">{t(card.titleKey)}</span>
+                  <span className="block text-[#FA3E22]">{t(card.highlightKey)}</span>
                 </h3>
               </div>
             </motion.article>

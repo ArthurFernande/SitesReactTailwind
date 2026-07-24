@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslation } from "@/components/traducaoButtons";
 
 export default function ContactCtaSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="sobre"
@@ -27,13 +29,13 @@ export default function ContactCtaSection() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <h2 className="font-title text-[38px] font-medium leading-tight text-white md:text-[56px] lg:text-[52px]">
-            Contáctenos
+            {t("arcade.contactCta.heading")}
           </h2>
 
           <p className="mx-auto mt-7 max-w-[1180px] font-body text-[22px] font-medium leading-[1.18] text-white md:text-[32px] lg:text-[28px]">
-            Conozca cómo Arcade puede potenciar su operación de entretenimiento{" "}
+            {t("arcade.contactCta.description.beforeHighlight")}
             <span className="text-[#FA3E22]">
-              con tecnología confiable y lista para escalar.
+              {t("arcade.contactCta.description.highlight")}
             </span>
           </p>
 
@@ -43,7 +45,7 @@ export default function ContactCtaSection() {
             </h3>
 
             <p className="mt-2 font-body text-[22px] font-medium leading-tight text-white md:text-[32px] lg:text-[28px]">
-              Entretenimiento digital moderno, seguro y profesional.
+              {t("arcade.contactCta.closing")}
             </p>
           </div>
         </motion.div>

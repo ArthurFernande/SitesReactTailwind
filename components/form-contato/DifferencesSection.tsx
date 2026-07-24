@@ -5,6 +5,7 @@ import { Oswald } from "next/font/google";
 import { ArrowRight, Crown, Rocket, Trophy, Zap } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -15,36 +16,35 @@ const backgroundImage = "/assets/imgs/form-contato/background03.png";
 
 type DifferenceItem = {
   icon: LucideIcon;
-  title: string;
-  description: string;
+  titleKey: TranslationKey;
+  descriptionKey: TranslationKey;
 };
 
 const differences: DifferenceItem[] = [
   {
     icon: Zap,
-    title: "Experiência em tempo real",
-    description:
-      "Interface dinâmica com atualização instantânea e interação contínua.",
+    titleKey: "contact.differences.realtime.title",
+    descriptionKey: "contact.differences.realtime.description",
   },
   {
     icon: Crown,
-    title: "Sistema VIP",
-    description:
-      "Condições exclusivas para os membros mais ativos da comunidade.",
+    titleKey: "contact.differences.vip.title",
+    descriptionKey: "contact.differences.vip.description",
   },
   {
     icon: Rocket,
-    title: "Plataforma premium",
-    description: "Ambiente moderno, rápido e otimizado para uso mobile.",
+    titleKey: "contact.differences.premium.title",
+    descriptionKey: "contact.differences.premium.description",
   },
   {
     icon: Trophy,
-    title: "Eventos especiais",
-    description: "Ações e novidades liberadas diariamente para a comunidade.",
+    titleKey: "contact.differences.events.title",
+    descriptionKey: "contact.differences.events.description",
   },
 ];
 
 export function DifferencesSection() {
+  const { t } = useTranslation();
   function scrollToForm() {
     document.getElementById("hero-contact-form")?.scrollIntoView({
       behavior: "smooth",
@@ -141,7 +141,7 @@ export function DifferencesSection() {
             lg:text-[60px]
           `}
         >
-          Tudo o que faz a <span className="text-[#f4bb00]">diferença</span>
+          {t("contact.differences.heading.beforeHighlight")}<span className="text-[#f4bb00]">{t("contact.differences.heading.highlight")}</span>
         </h2>
 
         {/* Cards */}
@@ -161,7 +161,7 @@ export function DifferencesSection() {
           "
         >
           {differences.map((item) => (
-            <DifferenceCard key={item.title} item={item} />
+            <DifferenceCard key={item.titleKey} item={item} />
           ))}
         </div>
 
@@ -207,7 +207,7 @@ export function DifferencesSection() {
             lg:max-w-[680px]
           "
         >
-          Faça seu cadastro agora!
+          {t("contact.hero.cta")}
           <ArrowRight
             aria-hidden
             size={21}
@@ -229,6 +229,7 @@ type DifferenceCardProps = {
 };
 
 function DifferenceCard({ item }: DifferenceCardProps) {
+  const { t } = useTranslation();
   const Icon = item.icon;
 
   return (
@@ -289,7 +290,7 @@ function DifferenceCard({ item }: DifferenceCardProps) {
             xl:text-[19px]
           `}
         >
-          {item.title}
+          {t(item.titleKey)}
         </h3>
       </div>
 
@@ -309,7 +310,7 @@ function DifferenceCard({ item }: DifferenceCardProps) {
           xl:text-[16px]
         "
       >
-        {item.description}
+        {t(item.descriptionKey)}
       </p>
     </article>
   );

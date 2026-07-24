@@ -3,15 +3,17 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Handshake, LockKeyhole, Target, TrendingUp } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const features = [
-  { icon: Target, title: "Tecnología validada" },
-  { icon: TrendingUp, title: "Infraestructura escalable" },
-  { icon: Handshake, title: "Operación segura" },
-  { icon: LockKeyhole, title: "Enfoque B2B" },
-];
+  { icon: Target, titleKey: "home.hero.feature.validated" },
+  { icon: TrendingUp, titleKey: "home.hero.feature.scalable" },
+  { icon: Handshake, titleKey: "home.hero.feature.safe" },
+  { icon: LockKeyhole, titleKey: "home.hero.feature.b2b" },
+] satisfies ReadonlyArray<{ icon: typeof Target; titleKey: TranslationKey }>;
 
 export default function HeroSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="home"
@@ -37,7 +39,7 @@ export default function HeroSection() {
         >
           <Image
             src="/assets/imgs/gtech/mundo.png"
-            alt="Tecnologia Global Tech"
+            alt={t("home.hero.imageAlt")}
             fill
             priority
             sizes="(max-width: 1024px) 90vw, 50vw"
@@ -56,16 +58,14 @@ export default function HeroSection() {
           </h1>
 
           <div className="font-body mt-2 text-[25px] font-normal leading-[1.12] text-white md:text-[32px]">
-            <p>Tecnología que impulsa negocios digitales</p>
+            <p>{t("home.hero.tagline.line1")}</p>
             <p className="text-[#FA3E22]">
-              de forma segura, escalable y eficiente.
+              {t("home.hero.tagline.line2")}
             </p>
           </div>
 
           <p className="font-body mt-4 max-w-[620px] text-[17px] font-normal leading-[1.55] text-white md:text-[21px]">
-            Desarrollamos y operamos plataformas tecnológicas listas para
-            escalar, pensadas para empresas que buscan crecer con estabilidad,
-            control y eficiencia operativa.
+            {t("home.hero.description")}
           </p>
 
           <div className="mt-10 grid w-full max-w-[620px] grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-4">
@@ -74,7 +74,7 @@ export default function HeroSection() {
 
               return (
                 <motion.div
-                  key={item.title}
+                  key={item.titleKey}
                   initial={{ opacity: 0, y: 25 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
@@ -93,7 +93,7 @@ export default function HeroSection() {
                   </div>
 
                   <h3 className="font-title mt-3 text-[14px] font-bold leading-tight text-white md:text-[16px]">
-                    {item.title}
+                    {t(item.titleKey)}
                   </h3>
                 </motion.div>
               );
@@ -107,7 +107,7 @@ export default function HeroSection() {
             transition={{ duration: 0.65, delay: 0.75, ease: "easeOut" }}
             className="font-title mt-11 flex h-[72px] w-full max-w-[610px] items-center justify-center rounded-full border-[5px] border-[#8EA0FF] bg-[#17181D]/70 text-center text-[16px] font-bold text-white shadow-[0_0_28px_rgba(142,160,255,0.9)] transition hover:bg-[#252741] md:h-[78px] md:text-[21px]"
           >
-            Conozca Nuestras Soluciones
+            {t("home.hero.cta")}
           </motion.a>
         </motion.div>
       </div>

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Oswald } from "next/font/google";
+import { useTranslation } from "@/components/traducaoButtons";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -9,6 +12,7 @@ const oswald = Oswald({
 const backgroundImage = "/assets/imgs/form-contato/background04.jpeg";
 
 export function CommunityQuoteSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="comunidade"
@@ -119,7 +123,7 @@ export function CommunityQuoteSection() {
           `}
         >
           <span aria-hidden>&quot;</span>
-          Enquanto muitos ainda estão descobrindo, os{" "}
+          {t("contact.quote.beforeMembers")}
           <span
             className="
               bg-gradient-to-r
@@ -130,9 +134,9 @@ export function CommunityQuoteSection() {
               text-transparent
             "
           >
-            membros ativos
-          </span>{" "}
-          já estão <span className="text-[#43f06c]">aproveitando</span>
+            {t("contact.quote.members")}
+          </span>
+          {t("contact.quote.beforeEnjoying")}<span className="text-[#43f06c]">{t("contact.quote.enjoying")}</span>
           <span aria-hidden>.&quot;</span>
         </blockquote>
       </div>

@@ -15,6 +15,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { ContactForm } from "./contactForm";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 
 
@@ -30,51 +31,52 @@ const mobileBackground = "/assets/imgs/form-contato/HeroSectionMobile.png";
 const primaryBenefits = [
   {
     icon: Rocket,
-    lines: ["Mercado", "bilionário", "em constante", "expansão"],
+    lineKeys: ["contact.hero.primary.market.1", "contact.hero.primary.market.2", "contact.hero.primary.market.3", "contact.hero.primary.market.4"],
   },
   {
     icon: BarChart3,
-    lines: ["Alta", "rentabilidade", "e escalabilidade", "ilimitada"],
+    lineKeys: ["contact.hero.primary.profit.1", "contact.hero.primary.profit.2", "contact.hero.primary.profit.3", "contact.hero.primary.profit.4"],
   },
   {
     icon: ShieldCheck,
-    lines: [
-      "Estrutura",
-      "completa e",
-      "suporte especializado",
-      "do início ao sucesso",
+    lineKeys: [
+      "contact.hero.primary.structure.1",
+      "contact.hero.primary.structure.2",
+      "contact.hero.primary.structure.3",
+      "contact.hero.primary.structure.4",
     ],
   },
   {
     icon: Crown,
-    lines: ["Seu negócio", "sua marca", "seu futuro"],
+    lineKeys: ["contact.hero.primary.brand.1", "contact.hero.primary.brand.2", "contact.hero.primary.brand.3"],
   },
-];
+] as const satisfies ReadonlyArray<{ icon: typeof Radio; lineKeys: readonly TranslationKey[] }>;
 
 const platformBenefits = [
   {
     icon: Radio,
-    lines: ["Eventos", "ao vivo"],
+    lineKeys: ["contact.hero.platform.live.1", "contact.hero.platform.live.2"],
   },
   {
     icon: RefreshCw,
-    lines: ["Atualizações", "em tempo real"],
+    lineKeys: ["contact.hero.platform.updates.1", "contact.hero.platform.updates.2"],
   },
   {
     icon: UserRound,
-    lines: ["Cassino com mais", "de 3000 jogos"],
+    lineKeys: ["contact.hero.platform.casino.1", "contact.hero.platform.casino.2"],
   },
   {
     icon: Trophy,
-    lines: ["Ranking", "competitivo"],
+    lineKeys: ["contact.hero.platform.ranking.1", "contact.hero.platform.ranking.2"],
   },
   {
     icon: Cpu,
-    lines: ["API", "Genius"],
+    lineKeys: ["contact.hero.platform.api.1", "contact.hero.platform.api.2"],
   },
-];
+] as const satisfies ReadonlyArray<{ icon: typeof Radio; lineKeys: readonly TranslationKey[] }>;
 
 export function HeroSection() {
+  const { t } = useTranslation();
   function scrollToForm() {
     document.getElementById("hero-contact-form")?.scrollIntoView({
       behavior: "smooth",
@@ -206,17 +208,17 @@ export function HeroSection() {
                 xl:text-[17px]
               "
             >
-              <p>O mercado que transforma</p>
+              <p>{t("contact.hero.kicker.line1")}</p>
 
               <p>
-                <span className="text-[#ffc400]">pessoas comuns em </span>
+                <span className="text-[#ffc400]">{t("contact.hero.kicker.line2")}</span>
 
                 <span className="rounded-sm bg-[#eeb900] px-1 text-white">
-                  milionários
+                  {t("contact.hero.kicker.highlight")}
                 </span>
               </p>
 
-              <p>está esperando por você</p>
+              <p>{t("contact.hero.kicker.line3")}</p>
             </div>
 
             {/* Linha decorativa */}
@@ -264,13 +266,13 @@ export function HeroSection() {
                 2xl:text-[72px]
               `}
             >
-              Crie sua própria
+              {t("contact.hero.title.line1")}
               <br />
-              <span className="text-[#ffc400]">plataforma de iGaming</span>
+              <span className="text-[#ffc400]">{t("contact.hero.title.line2")}</span>
               <br />
-              e construa sua liberdade
+              {t("contact.hero.title.line3")}
               <br />
-              <span className="text-[#ffc400]">financeira.</span>
+              <span className="text-[#ffc400]">{t("contact.hero.title.line4")}</span>
             </h1>
 
             {/* Texto de apoio */}
@@ -295,13 +297,12 @@ export function HeroSection() {
                 xl:text-[16px]
               "
             >
-              Enquanto muitos ainda estão pensando
+              {t("contact.hero.support.line1")}
               <br className="hidden sm:block" />
-              outros já estão
+              {t("contact.hero.support.line2")}
               <br className="md:hidden" />
               <span className="text-[#ffc400]">
-                {" "}
-                faturando alto todos os dias.
+                {t("contact.hero.support.highlight")}
               </span>
             </p>
 
@@ -345,7 +346,7 @@ export function HeroSection() {
                 xl:text-[15px]
               "
             >
-              Faça seu cadastro agora!
+              {t("contact.hero.cta")}
               <ArrowRight
                 size={21}
                 strokeWidth={3}
@@ -374,7 +375,7 @@ export function HeroSection() {
 
                 return (
                   <div
-                    key={benefit.lines.join("-")}
+                    key={benefit.lineKeys.join("-")}
                     className={`
                       relative
                       flex
@@ -446,8 +447,8 @@ export function HeroSection() {
                         xl:text-[10px]
                       "
                     >
-                      {benefit.lines.map((line) => (
-                        <p key={line}>{line}</p>
+                      {benefit.lineKeys.map((lineKey) => (
+                        <p key={lineKey}>{t(lineKey)}</p>
                       ))}
                     </div>
                   </div>
@@ -517,10 +518,10 @@ export function HeroSection() {
                   xl:text-[16px]
                 "
               >
-                O momento é <span className="text-[#ffc400]">agora.</span>
-                <span className="hidden sm:inline"> O lugar é o </span>
-                <span className="text-[#ffc400]">iGaming.</span>
-                <br />O sucesso é <span className="text-[#ffc400]">seu!</span>
+                {t("contact.hero.closing.beforeNow")}<span className="text-[#ffc400]">{t("contact.hero.closing.now")}</span>
+                <span className="hidden sm:inline">{t("contact.hero.closing.place")}</span>
+                <span className="text-[#ffc400]">{t("contact.hero.closing.igaming")}</span>
+                <br />{t("contact.hero.closing.success")}<span className="text-[#ffc400]">{t("contact.hero.closing.yours")}</span>
               </p>
             </div>
           </div>
@@ -559,7 +560,7 @@ export function HeroSection() {
 
             return (
               <div
-                key={benefit.lines.join("-")}
+                key={benefit.lineKeys.join("-")}
                 className={`
                   flex
                   min-h-[85px]
@@ -613,8 +614,8 @@ export function HeroSection() {
                     xl:text-[10px]
                   "
                 >
-                  {benefit.lines.map((line) => (
-                    <p key={line}>{line}</p>
+                  {benefit.lineKeys.map((lineKey) => (
+                    <p key={lineKey}>{t(lineKey)}</p>
                   ))}
                 </div>
               </div>
