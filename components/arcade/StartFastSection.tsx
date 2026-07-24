@@ -3,27 +3,29 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BadgeDollarSign, BadgeX, Cable, Rocket } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const items = [
   {
     icon: BadgeDollarSign,
-    text: "Sin costo de adhesión",
+    textKey: "arcade.start.item1",
   },
   {
     icon: BadgeX,
-    text: "Sin costo de implementación",
+    textKey: "arcade.start.item2",
   },
   {
     icon: Cable,
-    text: "Sin setup inicial",
+    textKey: "arcade.start.item3",
   },
   {
     icon: Rocket,
-    text: "Inicio rápido y organizado",
+    textKey: "arcade.start.item4",
   },
-];
+] satisfies ReadonlyArray<{ icon: typeof BadgeDollarSign; textKey: TranslationKey }>;
 
 export default function StartFastSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="inicio-rapido"
@@ -47,8 +49,8 @@ export default function StartFastSection() {
           viewport={{ once: true, amount: 0.25 }}
           className="font-title text-[36px] font-medium leading-tight md:text-[52px] lg:text-[42px]"
         >
-          <span className="block text-white">Empiece De Forma</span>
-          <span className="block text-[#FA3E22]">Rápida Y Simple</span>
+          <span className="block text-white">{t("arcade.start.heading.line1")}</span>
+          <span className="block text-[#FA3E22]">{t("arcade.start.heading.line2")}</span>
         </motion.h2>
 
         <div className="mx-auto mt-16 grid max-w-[980px] grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 lg:mt-20">
@@ -57,7 +59,7 @@ export default function StartFastSection() {
 
             return (
               <motion.div
-                key={item.text}
+                key={item.textKey}
                 initial={{ opacity: 0, y: 26 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{
@@ -73,7 +75,7 @@ export default function StartFastSection() {
                 </div>
 
                 <strong className="mt-5 max-w-[210px] font-body text-[16px] font-extrabold leading-[1.35] text-white md:text-[19px]">
-                  {item.text}
+                  {t(item.textKey)}
                 </strong>
               </motion.div>
             );

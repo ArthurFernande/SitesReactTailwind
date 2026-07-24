@@ -1,21 +1,25 @@
+"use client";
+
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 import { ContactForm } from "./ContactForm";
 
 const contactBenefits = [
   {
     number: "01",
-    text: "Resposta em até 1 dia útil",
+    textKey: "products.contact.benefit.response",
   },
   {
     number: "02",
-    text: "Reunião de diagnóstico sem compromisso",
+    textKey: "products.contact.benefit.meeting",
   },
   {
     number: "03",
-    text: "Proposta sob medida em 5 dias",
+    textKey: "products.contact.benefit.proposal",
   },
-];
+] satisfies ReadonlyArray<{ number: string; textKey: TranslationKey }>;
 
 export function ContactSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="contato"
@@ -158,11 +162,11 @@ export function ContactSection() {
                 "
               >
                 <span className="block">
-                  Pronto para transformar
+                  {t("products.contact.heading.line1")}
                 </span>
 
                 <span className="block">
-                  o{" "}
+                  {t("products.contact.heading.line2.beforeHighlight")}
                   <span
                     className="
                       bg-gradient-to-r
@@ -172,13 +176,13 @@ export function ContactSection() {
                       text-transparent
                     "
                   >
-                    potencial
-                  </span>{" "}
-                  do
+                    {t("products.contact.heading.line2.highlight")}
+                  </span>
+                  {t("products.contact.heading.line2.afterHighlight")}
                 </span>
 
                 <span className="block">
-                  seu negócio?
+                  {t("products.contact.heading.line3")}
                 </span>
               </h2>
 
@@ -197,8 +201,7 @@ export function ContactSection() {
                   2xl:text-[20px]
                 "
               >
-                Apresentamos a melhor solução para a sua operação, do
-                diagnóstico ao go-live, com suporte contínuo.
+                {t("products.contact.description")}
               </p>
 
               {/* Benefícios */}
@@ -259,7 +262,7 @@ export function ContactSection() {
                         md:text-[17px]
                       "
                     >
-                      {benefit.text}
+                      {t(benefit.textKey)}
                     </p>
                   </div>
                 ))}

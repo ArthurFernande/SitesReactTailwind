@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ArcadeLeadForm from "./ArcadeForm";
+import { useTranslation } from "@/components/traducaoButtons";
 
 export default function ArcadeContactSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="contato"
@@ -29,10 +31,10 @@ export default function ArcadeContactSection() {
           className="text-center lg:text-left"
         >
           <h2 className="font-title text-[38px] font-medium leading-[0.98] md:text-[56px] lg:text-[52px]">
-            <span className="block text-white">Entre agora para</span>
-            <span className="block text-white">desbloquear</span>
-            <span className="block text-[#FA3E22]">Vantagens</span>
-            <span className="block text-[#FA3E22]">exclusivas</span>
+            <span className="block text-white">{t("arcade.contact.heading.line1")}</span>
+            <span className="block text-white">{t("arcade.contact.heading.line2")}</span>
+            <span className="block text-[#FA3E22]">{t("arcade.contact.heading.line3")}</span>
+            <span className="block text-[#FA3E22]">{t("arcade.contact.heading.line4")}</span>
           </h2>
         </motion.div>
 

@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslation } from "@/components/traducaoButtons";
 
 export default function RegulatedMarketsSection() {
+  const { t } = useTranslation();
   return (
     <section className="relative overflow-hidden bg-[#070B1A] py-24 md:py-28">
       <Image
@@ -25,15 +27,13 @@ export default function RegulatedMarketsSection() {
           className="mx-auto max-w-[1080px] text-center"
         >
           <h2 className="font-title text-[36px] font-medium leading-tight text-white md:text-[52px] lg:text-[42px]">
-            Tecnologia pensada para mercados regulados
+            {t("home.regulated.heading.line1")}
             <br />
-            <span className="text-[#FA3E22]">y ambientes controlados</span>
+            <span className="text-[#FA3E22]">{t("home.regulated.heading.line2")}</span>
           </h2>
 
           <p className="font-body mx-auto mt-8 max-w-[1120px] text-[21px] font-semibold leading-[1.55] text-white md:text-[24px]">
-            Nuestras soluciones están diseñadas para operar en entornos que
-            exigen control, seguridad, cumplimiento y eficiencia, permitiendo a
-            nuestros socios enfocarse en el crecimiento del negocio.
+            {t("home.regulated.description")}
           </p>
         </motion.div>
       </div>

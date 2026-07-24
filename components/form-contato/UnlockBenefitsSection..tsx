@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import { Oswald } from "next/font/google";
+import { useTranslation } from "@/components/traducaoButtons";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -9,6 +10,7 @@ const oswald = Oswald({
 });
 
 export function UnlockBenefitsSection() {
+  const { t } = useTranslation();
   function scrollToForm() {
     document.getElementById("hero-contact-form")?.scrollIntoView({
       behavior: "smooth",
@@ -110,7 +112,7 @@ export function UnlockBenefitsSection() {
               xl:text-[60px]
             `}
           >
-            Entre agora para{" "}
+            {t("contact.unlock.heading.beforeUnlock")}
             <span
               className="
                 bg-gradient-to-r
@@ -121,10 +123,10 @@ export function UnlockBenefitsSection() {
                 text-transparent
               "
             >
-              desbloquear
+              {t("contact.unlock.heading.unlock")}
             </span>
             <br />
-            vantagens <span className="text-[#42f071]">exclusivas</span>
+            {t("contact.unlock.heading.beforeExclusive")}<span className="text-[#42f071]">{t("contact.unlock.heading.exclusive")}</span>
           </h2>
 
           <p
@@ -145,8 +147,7 @@ export function UnlockBenefitsSection() {
               lg:text-[22px]
             "
           >
-            A próxima liberação pode fechar a qualquer momento. O acesso
-            antecipado faz toda a diferença.
+            {t("contact.unlock.description")}
           </p>
 
           <button
@@ -190,7 +191,7 @@ export function UnlockBenefitsSection() {
               lg:max-w-[650px]
             "
           >
-            Faça seu cadastro agora!
+            {t("contact.hero.cta")}
             <ArrowRight
               aria-hidden
               size={22}

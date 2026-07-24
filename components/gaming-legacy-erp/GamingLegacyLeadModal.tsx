@@ -1,18 +1,19 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 import styles from "./gaming-legacy-erp.module.css";
 
-const teamSizes = ["1 a 10", "11 a 50", "51 a 100", "M\u00e1s de 100"];
-
-const copy = {
-  email: "Em qual endere\u00e7o de e-mail corporativo voc\u00ea gostaria de receber a proposta?",
-  phone: "Voc\u00ea poderia me dar seu n\u00famero de telefone?",
-  teamSize: "Por fim, quantos funcion\u00e1rios sua empresa possui?",
-};
+const teamSizes = [
+  ["1 a 10", "legacy.modal.team1"],
+  ["11 a 50", "legacy.modal.team2"],
+  ["51 a 100", "legacy.modal.team3"],
+  ["Mais de 100", "legacy.modal.team4"],
+] as const satisfies ReadonlyArray<readonly [string, TranslationKey]>;
 
 export function GamingLegacyLeadModal() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -45,43 +46,43 @@ export function GamingLegacyLeadModal() {
         <button
           className={styles.closeButton}
           type="button"
-          aria-label="Close"
+          aria-label={t("legacy.modal.close")}
           onClick={() => setIsOpen(false)}
         >
           {"\u00d7"}
         </button>
         <form className={styles.leadForm} onSubmit={handleSubmit}>
           <div className={styles.formField}>
-            <label htmlFor="legacy-name">Como se chama ? <span>*</span></label>
+            <label htmlFor="legacy-name">{t("legacy.modal.name")} <span>*</span></label>
             <input id="legacy-name" name="name" type="text" required />
           </div>
           <div className={styles.formField}>
             <label htmlFor="legacy-email">
-              {copy.email} <span>*</span>
+              {t("legacy.modal.email")} <span>*</span>
             </label>
             <input id="legacy-email" name="email" type="email" required />
           </div>
           <div className={styles.formField}>
-            <label htmlFor="legacy-phone">{copy.phone} <span>*</span></label>
+            <label htmlFor="legacy-phone">{t("legacy.modal.phone")} <span>*</span></label>
             <input id="legacy-phone" name="phone" type="tel" inputMode="tel" required />
           </div>
           <fieldset className={styles.radioField}>
             <legend id="legacy-lead-title">
-              {copy.teamSize} <span>*</span>
+              {t("legacy.modal.teamSize")} <span>*</span>
             </legend>
             <div className={styles.radioGrid}>
-              {teamSizes.map((teamSize) => {
-                const id = `legacy-team-${teamSize.replaceAll(" ", "-")}`;
+              {teamSizes.map(([value, labelKey]) => {
+                const id = `legacy-team-${value.replaceAll(" ", "-")}`;
                 return (
-                  <div key={teamSize}>
-                    <input id={id} name="team-size" type="radio" value={teamSize} required />
-                    <label htmlFor={id}>{teamSize}</label>
+                  <div key={value}>
+                    <input id={id} name="team-size" type="radio" value={value} required />
+                    <label htmlFor={id}>{t(labelKey)}</label>
                   </div>
                 );
               })}
             </div>
           </fieldset>
-          <button className={styles.submitButton} type="submit">Enviar</button>
+          <button className={styles.submitButton} type="submit">{t("legacy.modal.submit")}</button>
         </form>
       </section>
     </div>

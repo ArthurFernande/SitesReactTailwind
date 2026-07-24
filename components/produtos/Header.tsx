@@ -2,26 +2,11 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useTranslation } from "../traducaoButtons";
-
-const navigation = [
-  {
-    label: "Diferenciais",
-    href: "#diferenciais",
-  },
-  {
-    label: "Portfólio",
-    href: "#portfolio",
-  },
-  {
-    label: "Contato",
-    href: "#contato",
-  },
-];
+import { TraducaoButtons, useTranslation } from "../traducaoButtons";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { language: selectedLanguage, setLanguage, t } = useTranslation();
+  const { t } = useTranslation();
   const translatedNavigation = [
     { label: t("header.differentials"), href: "#diferenciais" },
     { label: t("header.portfolio"), href: "#portfolio" },
@@ -40,7 +25,7 @@ export function Header() {
           href="#inicio"
           onClick={closeMenu}
           className="relative flex shrink-0 items-center"
-          aria-label="Global Tech International - Página inicial"
+          aria-label={t("products.header.homeAria")}
         >
           <span className="absolute left-5 top-1/2 h-20 w-44 -translate-y-1/2 rounded-full bg-cyan-400/15 blur-2xl" />
 
@@ -57,7 +42,7 @@ export function Header() {
         {/* Navegação desktop */}
         <nav
           className="hidden items-center gap-14 lg:flex xl:gap-20"
-          aria-label="Navegação principal"
+          aria-label={t("products.header.primaryNavAria")}
         >
           {translatedNavigation.map((item) => (
             <a
@@ -74,46 +59,14 @@ export function Header() {
 
         {/* Área direita desktop */}
         <div className="hidden items-center gap-7 lg:flex">
-          {/* Bandeiras */}
-          <div
-            className="flex items-center gap-3"
-            aria-label="Seleção visual de idioma"
-          >
-            <button
-              type="button"
-              onClick={() => setLanguage("pt-BR")}
-              aria-label="Selecionar português"
-              title="Português"
-              className={`flex h-10 w-11 items-center justify-center rounded-lg border text-[27px] transition-all duration-300 ${
-                selectedLanguage === "pt-BR"
-                  ? "border-cyan-400/50 bg-cyan-400/10 shadow-[0_0_20px_rgba(34,211,238,0.15)]"
-                  : "border-transparent bg-transparent opacity-70 hover:border-white/10 hover:bg-white/5 hover:opacity-100"
-              }`}
-            >
-              <span aria-hidden="true">🇧🇷</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setLanguage("es")}
-              aria-label="Selecionar espanhol"
-              title="Español"
-              className={`flex h-10 w-11 items-center justify-center rounded-lg border text-[27px] transition-all duration-300 ${
-                selectedLanguage === "es"
-                  ? "border-cyan-400/50 bg-cyan-400/10 shadow-[0_0_20px_rgba(34,211,238,0.15)]"
-                  : "border-transparent bg-transparent opacity-70 hover:border-white/10 hover:bg-white/5 hover:opacity-100"
-              }`}
-            >
-              <span aria-hidden="true">🇪🇸</span>
-            </button>
-          </div>
+          <TraducaoButtons />
 
           {/* CTA */}
           <a
             href="#contato"
             className="group flex min-h-[58px] items-center justify-center gap-4 rounded-[24px] bg-[#55cff5] px-7 text-[17px] font-semibold text-[#041019] shadow-[0_12px_35px_rgba(85,207,245,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#75daf8] hover:shadow-[0_16px_40px_rgba(85,207,245,0.28)] xl:px-8 xl:text-[18px]"
           >
-            Fale com nosso time
+            {t("header.talkToTeam")}
 
             <svg
               width="25"
@@ -139,7 +92,7 @@ export function Header() {
           type="button"
           onClick={() => setIsMenuOpen((current) => !current)}
           className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-colors hover:bg-white/10 lg:hidden"
-          aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-label={t(isMenuOpen ? "header.closeMenu" : "header.openMenu")}
           aria-expanded={isMenuOpen}
         >
           {isMenuOpen ? (
@@ -185,7 +138,7 @@ export function Header() {
         }`}
       >
         <div className="mx-auto flex w-[92%] flex-col py-6">
-          <nav className="flex flex-col" aria-label="Navegação mobile">
+          <nav className="flex flex-col" aria-label={t("products.header.mobileNavAria")}>
           {translatedNavigation.map((item) => (
               <a
                 key={item.href}
@@ -198,37 +151,8 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Idiomas mobile */}
           <div className="mt-6 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setLanguage("pt-BR")}
-              className={`flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border text-sm font-medium transition-colors ${
-                selectedLanguage === "pt-BR"
-                  ? "border-cyan-400/40 bg-cyan-400/10 text-white"
-                  : "border-white/10 bg-white/5 text-slate-300"
-              }`}
-            >
-              <span className="text-2xl" aria-hidden="true">
-                🇧🇷
-              </span>
-              Português
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setLanguage("es")}
-              className={`flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border text-sm font-medium transition-colors ${
-                selectedLanguage === "es"
-                  ? "border-cyan-400/40 bg-cyan-400/10 text-white"
-                  : "border-white/10 bg-white/5 text-slate-300"
-              }`}
-            >
-              <span className="text-2xl" aria-hidden="true">
-                🇪🇸
-              </span>
-              Español
-            </button>
+            <TraducaoButtons mobile />
           </div>
 
           <a
@@ -236,7 +160,7 @@ export function Header() {
             onClick={closeMenu}
             className="mt-5 flex min-h-[56px] items-center justify-center gap-3 rounded-2xl bg-[#55cff5] px-6 text-base font-semibold text-[#041019]"
           >
-            Fale com nosso time
+            {t("header.talkToTeam")}
 
             <svg
               width="23"

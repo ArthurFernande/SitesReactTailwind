@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useTranslation } from "@/components/traducaoButtons";
 
 import styles from "./global-gaming-erp.module.css";
 
@@ -9,10 +12,11 @@ type CtaLinkProps = {
 };
 
 export function CtaLink({
-  children = "ADQUIRÍ AHORA",
+  children,
   href = "#",
   variant = "primary",
 }: CtaLinkProps) {
+  const { t } = useTranslation();
   return (
     <a
       className={`${styles.ctaButton} ${
@@ -20,7 +24,7 @@ export function CtaLink({
       }`}
       href={href}
     >
-      {children}
+      {children ?? t("globalErp.cta")}
     </a>
   );
 }

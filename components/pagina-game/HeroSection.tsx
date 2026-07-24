@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BasketballIcon, FootballIcon, GamepadIcon, TennisIcon } from "./Icons";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 type Match = {
   flag: string;
@@ -22,19 +23,20 @@ const initialMatches: Match[] = [
 ];
 
 const tabs = [
-  [FootballIcon, "Futebol"],
-  [BasketballIcon, "Basquete"],
-  [TennisIcon, "Tênis"],
-  [GamepadIcon, "e-Sports"],
-] as const;
+  [FootballIcon, "game.hero.tab.football"],
+  [BasketballIcon, "game.hero.tab.basketball"],
+  [TennisIcon, "game.hero.tab.tennis"],
+  [GamepadIcon, "game.hero.tab.esports"],
+] as const satisfies ReadonlyArray<readonly [typeof FootballIcon, TranslationKey]>;
 
 export function HeroSection() {
+  const { language, t } = useTranslation();
   const [matches, setMatches] = useState(initialMatches);
   const [time, setTime] = useState("");
   const [counters, setCounters] = useState({ bets: 1247, ggr: 84320, users: 2418 });
 
   useEffect(() => {
-    const updateClock = () => setTime(new Intl.DateTimeFormat("pt-BR", {
+    const updateClock = () => setTime(new Intl.DateTimeFormat(language, {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
@@ -66,7 +68,7 @@ export function HeroSection() {
       window.clearInterval(odds);
       window.clearInterval(values);
     };
-  }, []);
+  }, [language]);
 
   return (
     <section className="hero" id="top">
@@ -75,25 +77,25 @@ export function HeroSection() {
       <div className="hero-orb orb-2" />
 
       <div className="hero-left">
-        <div className="eyebrow"><span className="d" />XSA SPORTS × GLOBAL TECH · Plataforma iGaming</div>
+        <div className="eyebrow"><span className="d" />{t("game.hero.eyebrow")}</div>
         <h1 className="hero-title">
-          Sua casa<br />
-          <span className="big">DE APOSTAS<br /><span className="di">DIGITAL.</span></span>
+          {t("game.hero.title.line1")}<br />
+          <span className="big">{t("game.hero.title.line2")}<br /><span className="di">{t("game.hero.title.line3")}</span></span>
         </h1>
-        <p className="hero-sub">Cassino · Esportes · Ao Vivo · Compliance · KYC</p>
-        <p className="hero-desc">Plataforma completa pronta para operar — fruto da união estratégica entre <strong className="inline-white">XSA Sports</strong> e <strong className="inline-white">Global Tech</strong>. Tecnologia validada, compliance com a Lei 14.790/23 e suporte 24/7.</p>
+        <p className="hero-sub">{t("game.hero.subtitle")}</p>
+        <p className="hero-desc">{t("game.hero.description.beforeXsa")}<strong className="inline-white">XSA Sports</strong>{t("game.hero.description.betweenBrands")}<strong className="inline-white">Global Tech</strong>{t("game.hero.description.afterBrands")}</p>
         <div className="hero-chips">
-          <span className="chip cy">6.000+ jogos</span>
-          <span className="chip cy">Lei 14.790/23</span>
-          <span className="chip cy">Cassino ao vivo</span>
+          <span className="chip cy">{t("game.hero.chip.games")}</span>
+          <span className="chip cy">{t("game.compliance.law.title")}</span>
+          <span className="chip cy">{t("game.hero.chip.live")}</span>
           <span className="chip">Mobile-first</span>
           <span className="chip">App Android</span>
-          <span className="chip go">Plataforma híbrida</span>
+          <span className="chip go">{t("game.hero.chip.hybrid")}</span>
         </div>
         <div className="hero-stats">
-          <div className="hero-stat"><div className="v">6.000<span style={{ fontSize: "1.1rem", color: "var(--cyan-2)" }}>+</span></div><div className="l">Jogos integrados</div></div>
-          <div className="hero-stat"><div className="v">30<span style={{ fontSize: "1.1rem", color: "var(--cyan-2)" }}>+</span></div><div className="l">Esportes cobertos</div></div>
-          <div className="hero-stat"><div className="v g">4.5<span style={{ fontSize: "1.1rem", color: "var(--gold)" }}>★</span></div><div className="l">App cambistas</div></div>
+          <div className="hero-stat"><div className="v">6.000<span style={{ fontSize: "1.1rem", color: "var(--cyan-2)" }}>+</span></div><div className="l">{t("game.hero.stat.games")}</div></div>
+          <div className="hero-stat"><div className="v">30<span style={{ fontSize: "1.1rem", color: "var(--cyan-2)" }}>+</span></div><div className="l">{t("game.hero.stat.sports")}</div></div>
+          <div className="hero-stat"><div className="v g">4.5<span style={{ fontSize: "1.1rem", color: "var(--gold)" }}>★</span></div><div className="l">{t("game.hero.stat.app")}</div></div>
         </div>
       </div>
 
@@ -105,9 +107,9 @@ export function HeroSection() {
             <div className="mock-live"><span className="d" />LIVE · {time || "14:32:00"}</div>
           </div>
           <div className="mock-tabs">
-            {tabs.map(([Icon, label], index) => (
-              <div className={`mock-tab${index === 0 ? " on" : ""}`} key={label}>
-                <Icon className="sport-icon" />{label}
+            {tabs.map(([Icon, labelKey], index) => (
+              <div className={`mock-tab${index === 0 ? " on" : ""}`} key={labelKey}>
+                <Icon className="sport-icon" />{t(labelKey)}
               </div>
             ))}
           </div>
@@ -126,27 +128,27 @@ export function HeroSection() {
             ))}
           </div>
           <div className="mock-foot">
-            <span>SESSION · <span className="v">PT-BR</span></span>
+            <span>SESSION · <span className="v">{language.toUpperCase()}</span></span>
             <span>ODDS · <span className="v">GENIUS SPORTS</span></span>
             <span>LATENCY · <span className="v">42ms</span></span>
           </div>
         </div>
 
         <div className="float-card fc-1">
-          <div className="fc-label">Apostas / min</div>
-          <div className="fc-val mono">{counters.bets.toLocaleString("pt-BR")}</div>
-          <div className="fc-trend">↑ +12.3% últ. 5min</div>
+          <div className="fc-label">{t("game.hero.betsPerMinute")}</div>
+          <div className="fc-val mono">{counters.bets.toLocaleString(language)}</div>
+          <div className="fc-trend">{t("game.hero.trend")}</div>
         </div>
         <div className="float-card fc-2">
           <div className="fc-row">
-            <div><div className="fc-label">GGR Hoje</div><div className="fc-val g mono">R$ {counters.ggr.toLocaleString("pt-BR")}</div></div>
-            <div style={{ textAlign: "right" }}><div className="fc-label">Jogadores</div><div className="fc-val mono">{counters.users.toLocaleString("pt-BR")}</div></div>
+            <div><div className="fc-label">{t("game.hero.ggrToday")}</div><div className="fc-val g mono">R$ {counters.ggr.toLocaleString(language)}</div></div>
+            <div style={{ textAlign: "right" }}><div className="fc-label">{t("game.hero.players")}</div><div className="fc-val mono">{counters.users.toLocaleString(language)}</div></div>
           </div>
         </div>
         <div className="float-card fc-3">
-          <div className="fc-label">PIX Depósito</div>
+          <div className="fc-label">{t("game.hero.pixDeposit")}</div>
           <div className="fc-val gr mono">R$ 50,00</div>
-          <div className="fc-trend">✓ Confirmado · 8s</div>
+          <div className="fc-trend">{t("game.hero.confirmed")}</div>
         </div>
       </div>
     </section>

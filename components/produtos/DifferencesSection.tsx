@@ -1,4 +1,7 @@
+"use client";
+
 import { Space_Grotesk } from "next/font/google";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -8,35 +11,37 @@ const spaceGrotesk = Space_Grotesk({
 const pillars = [
   {
     number: "01",
-    title: "Tecnologia validada",
-    description:
-      "Plataformas em produção há anos, com arquitetura moderna, modular e pronta para escalar. Nada é experimento.",
-    footer: "VALIDADO EM PRODUÇÃO",
+    titleKey: "products.differences.validated.title",
+    descriptionKey: "products.differences.validated.description",
+    footerKey: "products.differences.validated.footer",
   },
   {
     number: "02",
-    title: "Infraestrutura escalável",
-    description:
-      "Estabilidade, segurança e performance para operações críticas. Cresce com seu negócio sem sobressaltos.",
-    footer: "PRONTO PARA VOLUME",
+    titleKey: "products.differences.scalable.title",
+    descriptionKey: "products.differences.scalable.description",
+    footerKey: "products.differences.scalable.footer",
   },
   {
     number: "03",
-    title: "Segurança em primeiro lugar",
-    description:
-      "Tecnologias avançadas que protegem dados, transações e usuários em ambientes regulados e exigentes.",
-    footer: "FOCO EM COMPLIANCE",
+    titleKey: "products.differences.security.title",
+    descriptionKey: "products.differences.security.description",
+    footerKey: "products.differences.security.footer",
   },
   {
     number: "04",
-    title: "Foco total em B2B",
-    description:
-      "Modelos white label adaptáveis à sua marca, mercado e estratégia. Você opera; nós sustentamos a tecnologia.",
-    footer: "WHITE LABEL REAL",
+    titleKey: "products.differences.b2b.title",
+    descriptionKey: "products.differences.b2b.description",
+    footerKey: "products.differences.b2b.footer",
   },
-];
+] satisfies ReadonlyArray<{
+  number: string;
+  titleKey: TranslationKey;
+  descriptionKey: TranslationKey;
+  footerKey: TranslationKey;
+}>;
 
 export function DifferencesSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="diferenciais"
@@ -98,16 +103,16 @@ export function DifferencesSection() {
               xl:text-[58px]
             "
           >
-            <span className="block">Não somos só um</span>
+            <span className="block">{t("products.differences.heading.line1")}</span>
 
-            <span className="block">fornecedor.</span>
+            <span className="block">{t("products.differences.heading.line2")}</span>
 
             <span className="mt-2 block text-[#49c8f2]">
-              Somos um
+              {t("products.differences.heading.line3")}
             </span>
 
             <span className="block text-[#49c8f2]">
-              parceiro tecnológico.
+              {t("products.differences.heading.line4")}
             </span>
           </h2>
 
@@ -129,8 +134,7 @@ export function DifferencesSection() {
               xl:text-[21px]
             "
           >
-            Quatro pilares que sustentam cada uma das nossas plataformas em
-            produção.
+            {t("products.differences.description")}
           </p>
         </div>
 
@@ -241,7 +245,7 @@ export function DifferencesSection() {
                     xl:text-[19px]
                   "
                 >
-                  {pillar.title}
+                    {t(pillar.titleKey)}
                 </h3>
 
                 <p
@@ -259,7 +263,7 @@ export function DifferencesSection() {
                     xl:text-[16px]
                   "
                 >
-                  {pillar.description}
+                    {t(pillar.descriptionKey)}
                 </p>
               </div>
 
@@ -282,7 +286,7 @@ export function DifferencesSection() {
                     sm:text-[13px]
                   "
                 >
-                  {pillar.footer}
+                  {t(pillar.footerKey)}
                 </span>
               </div>
             </article>

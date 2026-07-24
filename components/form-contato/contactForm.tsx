@@ -8,6 +8,7 @@ import {
 
 import { LockKeyhole } from "lucide-react";
 import { z } from "zod";
+import { useTranslation } from "@/components/traducaoButtons";
 
 const contactFormSchema = z.object({
   nome: z
@@ -57,6 +58,7 @@ const initialFormData: ContactFormFields = {
 };
 
 export function ContactForm() {
+  const { t } = useTranslation();
   const [formData, setFormData] =
     useState<ContactFormFields>(initialFormData);
 
@@ -118,7 +120,13 @@ export function ContactForm() {
           issue.path[0] as keyof ContactFormFields;
 
         if (fieldName && !fieldErrors[fieldName]) {
-          fieldErrors[fieldName] = issue.message;
+          fieldErrors[fieldName] = t(
+            fieldName === "nome"
+              ? "contact.form.validation.name"
+              : fieldName === "whatsapp"
+                ? "contact.form.validation.whatsapp"
+                : "contact.form.validation.city",
+          );
         }
       });
 
@@ -155,14 +163,12 @@ export function ContactForm() {
 
       if (!response.ok) {
         throw new Error(
-          responseData?.message ??
-            "Não foi possível enviar seu cadastro.",
+          t("contact.form.error"),
         );
       }
 
       setSuccessMessage(
-        responseData?.message ??
-          "Obrigado! Em breve, entraremos em contato."
+        t("contact.form.success"),
       );
 
       setFormData(initialFormData);
@@ -177,7 +183,7 @@ export function ContactForm() {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Não foi possível enviar agora. Tente novamente.",
+          : t("contact.form.error"),
       );
     } finally {
       setIsSubmitting(false);
@@ -225,15 +231,15 @@ export function ContactForm() {
             xl:text-[19px]
           "
         >
-          Fale com um dos nossos
+          {t("contact.form.heading.line1")}
           <br />
-          consultores e descubra como
+          {t("contact.form.heading.line2")}
           <br />
           <span className="text-[#ffc400]">
-            lançar sua plataforma
+            {t("contact.form.heading.line3")}
           </span>
           <br />
-          rapidamente.
+          {t("contact.form.heading.line4")}
         </h2>
 
         <form
@@ -249,7 +255,7 @@ export function ContactForm() {
         >
           <FormField
             id="nome"
-            label="Nome"
+            label={t("contact.form.name")}
             name="nome"
             type="text"
             value={formData.nome}
@@ -261,14 +267,14 @@ export function ContactForm() {
 
           <FormField
             id="whatsapp"
-            label="WhatsApp"
+            label={t("contact.form.whatsapp")}
             name="whatsapp"
             type="tel"
             value={formData.whatsapp}
             error={errors.whatsapp}
             autoComplete="tel"
             inputMode="numeric"
-            placeholder="(00) 00000-0000"
+            placeholder={t("contact.form.phonePlaceholder")}
             maxLength={15}
             disabled={isSubmitting}
             onChange={handleChange}
@@ -276,7 +282,7 @@ export function ContactForm() {
 
           <FormField
             id="cidade"
-            label="Cidade"
+            label={t("contact.form.city")}
             name="cidade"
             type="text"
             value={formData.cidade}
@@ -346,8 +352,8 @@ export function ContactForm() {
             "
           >
             {isSubmitting
-              ? "Enviando..."
-              : "Faça seu cadastro agora!"}
+              ? t("contact.form.submitting")
+              : t("contact.form.submit")}
           </button>
 
           {successMessage && (
@@ -388,7 +394,7 @@ export function ContactForm() {
                 text-white/90
               "
             >
-              Seus dados estão 100% seguros conosco.
+              {t("contact.form.secure")}
             </p>
           </div>
         </form>

@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslation } from "@/components/traducaoButtons";
 
 const logoPath = "/assets/imgs/form-contato/logo-xsa.png";
 
 export function Footer() {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -81,8 +85,7 @@ export function Footer() {
             lg:text-[14px]
           "
         >
-          © {currentYear} Global Tech International. Todos os direitos
-          reservados.
+          © {currentYear} {t("contact.footer.copyright")}
         </p>
       </div>
     </footer>

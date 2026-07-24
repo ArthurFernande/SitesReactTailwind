@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -22,43 +23,40 @@ const vipImage = "/assets/imgs/form-contato/vip.jpeg";
 
 type Feature = {
   icon: LucideIcon;
-  title: string[];
-  description: string;
+  titleKeys: readonly TranslationKey[];
+  descriptionKey: TranslationKey;
 };
 
 const features: Feature[] = [
   {
     icon: Cpu,
-    title: ["Tecnologia", "avançada"],
-    description:
-      "Servidores de última geração para máxima performance e estabilidade.",
+    titleKeys: ["contact.newEra.feature.tech.1", "contact.newEra.feature.tech.2"],
+    descriptionKey: "contact.newEra.feature.tech.description",
   },
   {
     icon: CreditCard,
-    title: ["Pagamentos", "rápidos"],
-    description:
-      "Gateway com criptomoedas e meios fiat. Depósitos e saques ágeis e seguros.",
+    titleKeys: ["contact.newEra.feature.payments.1", "contact.newEra.feature.payments.2"],
+    descriptionKey: "contact.newEra.feature.payments.description",
   },
   {
     icon: Headphones,
-    title: ["Suporte", "especializado"],
-    description: "Equipe 24/7 pronta para atender você e seus jogadores.",
+    titleKeys: ["contact.newEra.feature.support.1", "contact.newEra.feature.support.2"],
+    descriptionKey: "contact.newEra.feature.support.description",
   },
   {
     icon: ShieldCheck,
-    title: ["Privacidade", "garantida"],
-    description:
-      "Proteção de dados, criptografia SSL e total conformidade com LGPD.",
+    titleKeys: ["contact.newEra.feature.privacy.1", "contact.newEra.feature.privacy.2"],
+    descriptionKey: "contact.newEra.feature.privacy.description",
   },
   {
     icon: LockKeyhole,
-    title: ["Segurança", "robusta"],
-    description:
-      "Proteção contra ataques, ferramentas antifraude e monitoramento 24/7.",
+    titleKeys: ["contact.newEra.feature.security.1", "contact.newEra.feature.security.2"],
+    descriptionKey: "contact.newEra.feature.security.description",
   },
 ];
 
 export function NewEraSection() {
+  const { t } = useTranslation();
   function scrollToForm() {
     document.getElementById("hero-contact-form")?.scrollIntoView({
       behavior: "smooth",
@@ -119,7 +117,7 @@ export function NewEraSection() {
           >
             <Image
               src={vipImage}
-              alt="Símbolo VIP com cartas de baralho"
+              alt={t("contact.newEra.vipAlt")}
               fill
               priority={false}
               sizes="
@@ -152,9 +150,9 @@ export function NewEraSection() {
                 xl:text-[68px]
               `}
             >
-              Faça parte
+              {t("contact.newEra.heading.beforeHighlight")}
               <br />
-              <span className="text-[#f4bb00]">da nova era</span>
+              <span className="text-[#f4bb00]">{t("contact.newEra.heading.highlight")}</span>
             </h2>
 
             <p
@@ -177,9 +175,9 @@ export function NewEraSection() {
                 xl:text-[22px]
               "
             >
-              Acesso ilimitado. Novas vagas liberadas
+              {t("contact.newEra.description.line1")}
               <br className="hidden sm:block" />
-              diariamente. Garanta já o seu lugar.
+              {t("contact.newEra.description.line2")}
             </p>
           </div>
 
@@ -220,7 +218,7 @@ export function NewEraSection() {
                 xl:text-[17px]
               "
             >
-              Faça seu cadastro agora!
+              {t("contact.hero.cta")}
               <ArrowRight
                 aria-hidden
                 size={21}
@@ -272,7 +270,7 @@ export function NewEraSection() {
             lg:hidden
           "
         >
-          Faça seu cadastro agora!
+          {t("contact.hero.cta")}
           <ArrowRight
             aria-hidden
             size={21}
@@ -311,7 +309,7 @@ export function NewEraSection() {
           >
             {features.map((feature, index) => (
               <FeatureCard
-                key={feature.title.join("-")}
+                key={feature.titleKeys.join("-")}
                 feature={feature}
                 index={index}
                 total={features.length}
@@ -331,6 +329,7 @@ type FeatureCardProps = {
 };
 
 function FeatureCard({ feature, index, total }: FeatureCardProps) {
+  const { t } = useTranslation();
   const Icon = feature.icon;
 
   return (
@@ -387,9 +386,9 @@ function FeatureCard({ feature, index, total }: FeatureCardProps) {
             xl:text-[14px]
           "
         >
-          {feature.title.map((line) => (
-            <span key={line} className="block">
-              {line}
+          {feature.titleKeys.map((lineKey) => (
+            <span key={lineKey} className="block">
+              {t(lineKey)}
             </span>
           ))}
         </h3>
@@ -407,7 +406,7 @@ function FeatureCard({ feature, index, total }: FeatureCardProps) {
           xl:text-[14px]
         "
       >
-        {feature.description}
+        {t(feature.descriptionKey)}
       </p>
     </article>
   );

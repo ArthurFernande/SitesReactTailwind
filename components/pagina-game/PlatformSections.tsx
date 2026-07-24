@@ -1,19 +1,22 @@
+"use client";
+
 import { CheckIcon, DeviceIcon, FootballIcon, ShieldIcon } from "./Icons";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const tickerItems = [
-  ["", "Cassino Ao Vivo"],
-  ["g", "3.000+ Jogos"],
-  ["gr", "PIX Automático"],
-  ["", "API Genius Sports"],
-  ["g", "Mobile-first PWA"],
-  ["", "KYC Automatizado"],
-  ["g", "Dashboard Operacional"],
-  ["gr", "Antifraude em Tempo Real"],
-  ["", "White-label"],
-  ["g", "Suporte 24/7"],
-  ["", "30+ Modalidades"],
-  ["gr", "Cash Out"],
-] as const;
+  ["", "game.ticker.casino"],
+  ["g", "game.ticker.games"],
+  ["gr", "game.ticker.pix"],
+  ["", "game.ticker.genius"],
+  ["g", "game.ticker.mobile"],
+  ["", "game.ticker.kyc"],
+  ["g", "game.ticker.dashboard"],
+  ["gr", "game.ticker.antifraud"],
+  ["", "game.ticker.whiteLabel"],
+  ["g", "game.ticker.support"],
+  ["", "game.ticker.sports"],
+  ["gr", "game.ticker.cashout"],
+] as const satisfies ReadonlyArray<readonly [string, TranslationKey]>;
 
 const providers = [
   ["Pragmatic Play", "Slots · Live"],
@@ -29,16 +32,16 @@ const providers = [
 ] as const;
 
 const features = [
-  ["Cassino Completo", "Slots, crash, table games, roleta, blackjack e cassino ao vivo com dealers — integrados em uma única biblioteca.", ["3.000+ jogos", "30+ provedores", "HD Live"], ""],
-  ["Esportes & Live", "Mais de 30 modalidades, odds em tempo real, in-play, cash out, parlay e cobertura de campeonatos globais.", ["In-Play", "Cash Out", "Streaming"], ""],
-  ["API Genius Sports", "Dados, odds e estatísticas da maior referência global em inteligência esportiva, direto na sua plataforma.", ["Odds live", "Estatísticas", "Placar"], "go"],
-  ["Mobile-first & PWA", "Interface responsiva, otimizada para mobile com experiência nativa via Progressive Web App.", ["iOS", "Android", "PWA"], ""],
-  ["Pagamentos & Carteira", "PIX automático, transferência, criptomoedas e carteira digital. Depósito e saque rápidos, sem fricção.", ["PIX", "TED", "Crypto"], ""],
-  ["VIP & Fidelização", "Programa de fidelidade por níveis, ranking competitivo, bônus dinâmicos e gestão de retenção.", ["Ranking", "Cashback", "Missões"], ""],
-  ["KYC & Compliance", "Verificação automatizada via biometria e documento, anti-fraude em tempo real e jogo responsável.", ["OCR", "Biometria", "AML"], "go"],
-  ["Afiliados & Aquisição", "Sistema completo de afiliados com tracking, comissionamento por níveis e dashboards de performance.", ["CPA", "RevShare", "Híbrido"], ""],
-  ["Painel & BI", "Dashboard executivo com GGR, NGR, retenção, LTV, comportamento de jogadores e exportação de dados.", ["Real-time", "Export", "API"], ""],
-] as const;
+  ["game.features.casino.title", "game.features.casino.description", ["game.features.tag.games", "game.features.tag.providers", "game.features.tag.hdLive"], ""],
+  ["game.features.sports.title", "game.features.sports.description", ["game.features.tag.inPlay", "game.features.tag.cashOut", "game.features.tag.streaming"], ""],
+  ["game.features.genius.title", "game.features.genius.description", ["game.features.tag.liveOdds", "game.features.tag.statistics", "game.features.tag.scoreboard"], "go"],
+  ["game.features.mobile.title", "game.features.mobile.description", ["game.features.tag.ios", "game.features.tag.android", "game.features.tag.pwa"], ""],
+  ["game.features.wallet.title", "game.features.wallet.description", ["game.features.tag.pix", "game.features.tag.ted", "game.features.tag.crypto"], ""],
+  ["game.features.vip.title", "game.features.vip.description", ["game.features.tag.ranking", "game.features.tag.cashback", "game.features.tag.missions"], ""],
+  ["game.features.kyc.title", "game.features.kyc.description", ["game.features.tag.ocr", "game.features.tag.biometry", "game.features.tag.aml"], "go"],
+  ["game.features.affiliates.title", "game.features.affiliates.description", ["game.features.tag.cpa", "game.features.tag.revshare", "game.features.tag.hybrid"], ""],
+  ["game.features.bi.title", "game.features.bi.description", ["game.features.tag.realtime", "game.features.tag.export", "game.features.tag.api"], ""],
+] as const satisfies ReadonlyArray<readonly [TranslationKey, TranslationKey, readonly TranslationKey[], string]>;
 
 function FeatureIcon({ index }: { index: number }) {
   if (index === 1) return <FootballIcon width="20" height="20" />;
@@ -61,11 +64,12 @@ function FeatureIcon({ index }: { index: number }) {
 }
 
 export function Ticker() {
+  const { t } = useTranslation();
   return (
-    <div className="ticker" aria-label="Recursos da plataforma">
+    <div className="ticker" aria-label={t("game.ticker.aria")}>
       <div className="ticker-track">
         {[...tickerItems, ...tickerItems].map(([variant, text], index) => (
-          <span className={`tk${variant ? ` ${variant}` : ""}`} key={`${text}-${index}`}><span className="d" />{text}</span>
+          <span className={`tk${variant ? ` ${variant}` : ""}`} key={`${text}-${index}`}><span className="d" />{t(text)}</span>
         ))}
       </div>
     </div>
@@ -73,23 +77,24 @@ export function Ticker() {
 }
 
 export function InstitutionalSections() {
+  const { t } = useTranslation();
   return (
     <>
       <section className="about" id="quem-somos">
         <div className="about-grid">
           <div>
-            <div className="eyebrow"><span className="d" />Apresentação Institucional</div>
-            <h2 className="about-disp">Quem<br />Somos</h2>
-            <p>Temos o prazer de apresentar uma <strong>proposta exclusiva</strong> que surge de uma união estratégica de grande impacto no mercado de jogos online: a fusão da <strong>XSA Sports</strong> com a <strong>Global Tech</strong>.</p>
-            <p>Combinando décadas de expertise em jogos e esportes digitais, esta fusão cria uma potência no desenvolvimento de soluções inovadoras e tecnológicas para plataformas de jogos, oferecendo a você uma oportunidade única de impulsionar seu negócio a novos horizontes.</p>
+            <div className="eyebrow"><span className="d" />{t("game.institutional.eyebrow")}</div>
+            <h2 className="about-disp">{t("game.institutional.title.line1")}<br />{t("game.institutional.title.line2")}</h2>
+            <p>{t("game.institutional.paragraph1.beforeProposal")}<strong>{t("game.institutional.paragraph1.proposal")}</strong>{t("game.institutional.paragraph1.beforeXsa")}<strong>XSA Sports</strong>{t("game.institutional.paragraph1.betweenBrands")}<strong>Global Tech</strong>{t("game.institutional.paragraph1.afterBrands")}</p>
+            <p>{t("game.institutional.paragraph2")}</p>
             <div className="about-fusion"><span className="b">XSA SPORTS</span><span className="x">×</span><span className="b">GLOBAL TECH</span></div>
           </div>
-          <div className="about-img"><img src="/assets/imgs/pagina-game/global-tech-office.png" alt="Sede Global Tech" /></div>
+          <div className="about-img"><img src="/assets/imgs/pagina-game/global-tech-office.png" alt={t("game.institutional.officeAlt")} /></div>
         </div>
       </section>
 
       <section className="providers" style={{ padding: "3.5rem 5%" }}>
-        <div className="providers-head">Os melhores fornecedores de cassino · 6.000+ jogos integrados</div>
+        <div className="providers-head">{t("game.providers.heading")}</div>
         <div className="providers-real">
           {providers.map(([name, type]) => <div className="prov-card" key={name}><div className="nm">{name}</div><div className="sub">{type}</div></div>)}
         </div>
@@ -97,26 +102,26 @@ export function InstitutionalSections() {
 
       <section className="photo-section photo-sports">
         <div className="photo-inner">
-          <div className="eyebrow"><span className="d" />Vertical Esportes</div>
-          <h2 className="photo-title">NOSSOS<br /><span className="ac2">ESPORTES.</span></h2>
-          <p>Mais de 30 modalidades, dos campeonatos brasileiros aos torneios globais. Cotações no padrão das maiores casas, atualização em tempo real e cobertura completa de futebol, basquete, tênis, MMA, e-sports e mais.</p>
-          <a href="#produto" className="btn btn-pri">Ver a vertical de esportes →</a>
+          <div className="eyebrow"><span className="d" />{t("game.sports.eyebrow")}</div>
+          <h2 className="photo-title">{t("game.sports.title.line1")}<br /><span className="ac2">{t("game.sports.title.line2")}</span></h2>
+          <p>{t("game.sports.description")}</p>
+          <a href="#produto" className="btn btn-pri">{t("game.sports.cta")}</a>
         </div>
       </section>
 
       <section className="features" id="plataforma">
         <div className="sec-head">
-          <div className="sec-tag"><span className="num">01 /</span>O que está incluído</div>
-          <h2 className="sec-title">Tudo que sua operação<br />precisa para escalar.</h2>
-          <p className="sec-desc">Plataforma modular pronta para operar — cada componente integrado e validado. Você foca no produto, na marca e na aquisição.</p>
+          <div className="sec-tag"><span className="num">01 /</span>{t("game.features.eyebrow")}</div>
+          <h2 className="sec-title">{t("game.features.heading.line1")}<br />{t("game.features.heading.line2")}</h2>
+          <p className="sec-desc">{t("game.features.description")}</p>
         </div>
         <div className="feat-grid">
           {features.map(([title, description, tags, variant], index) => (
             <div className={`feat-card${variant ? ` ${variant}` : ""}`} key={title}>
               <div className="feat-icon"><FeatureIcon index={index} /></div>
-              <div className="feat-title">{title}</div>
-              <div className="feat-desc">{description}</div>
-              <div className="feat-meta">{tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+              <div className="feat-title">{t(title)}</div>
+              <div className="feat-desc">{t(description)}</div>
+              <div className="feat-meta">{tags.map((tag) => <span key={tag}>{t(tag)}</span>)}</div>
             </div>
           ))}
         </div>
@@ -124,9 +129,9 @@ export function InstitutionalSections() {
 
       <section className="photo-section photo-casino">
         <div className="photo-inner photo-right">
-          <div className="eyebrow"><span className="d" />Vertical Cassino</div>
-          <h2 className="photo-title">NOSSO<br /><span className="ac2">CASSINO.</span></h2>
-          <p>Mais de 6.000 jogos integrados — slots, crash, table games, raspadinha, esportes virtuais e cassino ao vivo com dealers reais. Os melhores fornecedores do mundo, sob a sua marca.</p>
+          <div className="eyebrow"><span className="d" />{t("game.casino.eyebrow")}</div>
+          <h2 className="photo-title">{t("game.casino.title.line1")}<br /><span className="ac2">{t("game.casino.title.line2")}</span></h2>
+          <p>{t("game.casino.description")}</p>
         </div>
       </section>
     </>

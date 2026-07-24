@@ -1,27 +1,25 @@
+"use client";
+
+import { useTranslation } from "@/components/traducaoButtons";
 import styles from "./gaming-legacy-erp.module.css";
 
-const copy = {
-  title: "Plataforma Tradicional de iGaming \u2013 Simplicidad y Estabilidad",
-  animatedTitle: "para tu Operaci\u00f3n",
-  firstParagraph: "es una soluci\u00f3n s\u00f3lida, b\u00e1sica y eficiente, desarrollada para operadores que buscan gestionar su operaci\u00f3n de forma simple, segura y sin complicaciones.",
-  secondParagraph: "Con a\u00f1os de funcionamiento continuo, esta tecnolog\u00eda ha demostrado ser confiable para operaciones de distintos tama\u00f1os, ofreciendo los elementos esenciales para una experiencia de iGaming estable y funcional.",
-};
-
 export function GamingLegacyHero() {
+  const { t } = useTranslation();
   return (
     <section className={styles.hero} aria-labelledby="gaming-legacy-title">
       <div className={styles.heroOverlay} aria-hidden="true" />
       <div className={styles.heroInner}>
         <p className={styles.eyebrow}>GAMING LEGACY ERP</p>
         <h1 id="gaming-legacy-title" className={styles.title}>
-          <span>{copy.title}</span>
-          <span className={styles.animatedTitle}>{copy.animatedTitle}</span>
+          <span>{t("legacy.hero.title")}</span>
+          <span className={styles.animatedTitle}>{t("legacy.hero.animatedTitle")}</span>
         </h1>
         <div className={styles.description}>
           <p>
-            Nuestra <strong>plataforma heredada</strong> {copy.firstParagraph}
+            {t("legacy.hero.intro.beforeHighlight")}<strong>{t("legacy.hero.intro.highlight")}</strong>
+            {t("legacy.hero.intro.afterHighlight")}
           </p>
-          <p>{copy.secondParagraph}</p>
+          <p>{t("legacy.hero.paragraph2")}</p>
         </div>
         <div className={styles.spacer} aria-hidden="true" />
       </div>

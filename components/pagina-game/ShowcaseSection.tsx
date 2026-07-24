@@ -1,49 +1,58 @@
 "use client";
 
 import { useId, useState } from "react";
+import { useTranslation } from "@/components/traducaoButtons";
+import type { TranslationKey } from "@/components/traducaoButtons";
 import { DiceIcon, FootballIcon, RadioIcon, RefreshIcon, ShieldIcon } from "./Icons";
 
 type ShowcaseKey = "casino" | "sports" | "live";
 
 const showcase = {
   casino: {
-    label: "Cassino",
-    led: "VERTICAL 01 · CASINO",
-    title: "Cassino Digital",
+    labelKey: "game.showcase.casino.label",
+    ledKey: "game.showcase.casino.led",
+    titleKey: "game.showcase.casino.title",
     color: "var(--cyan)",
-    description: "Slots, crash games, raspadinha, esportes virtuais, roleta, blackjack e baccarat — mais de 6.000 jogos integrados, com cassino ao vivo via dealers reais em HD.",
+    descriptionKey: "game.showcase.casino.description",
     items: [
-      ["games", "+6.000 Jogos Disponíveis", "Slots, crash, table games, raspadinha e esportes virtuais."],
-      ["live", "Cassino ao Vivo HD", "Roleta, Blackjack, Baccarat com dealers reais via streaming."],
-      ["refresh", "10+ Provedores Premium", "Pragmatic, Evolution, PG Soft, BGaming, Belatra, Tom Horn, EvoPlay e mais."],
+      ["games", "game.showcase.casino.games.title", "game.showcase.casino.games.description"],
+      ["live", "game.showcase.casino.live.title", "game.showcase.casino.live.description"],
+      ["refresh", "game.showcase.casino.providers.title", "game.showcase.casino.providers.description"],
     ],
   },
   sports: {
-    label: "Esportes",
-    led: "VERTICAL 02 · SPORTS",
-    title: "Apostas Esportivas",
+    labelKey: "game.showcase.sports.label",
+    ledKey: "game.showcase.sports.led",
+    titleKey: "game.showcase.sports.title",
     color: "var(--gold)",
-    description: "Mais de 30 modalidades com odds em tempo real, pré-jogo e cobertura completa dos grandes campeonatos nacionais e internacionais — com cotações no padrão das grandes casas do mundo.",
+    descriptionKey: "game.showcase.sports.description",
     items: [
-      ["sports", "Apostas Ao Vivo", "Seus clientes apostam em tempo real durante os jogos."],
-      ["chart", "Cotações Automáticas", "Odds e resultados automáticos, seguindo o padrão das grandes casas."],
-      ["shield", "Gestão de Risco", "Ferramentas poderosas para gerir e reduzir o risco da operação."],
-      ["ticket", "Bilhetes em Tempo Real", "Acompanhamento ao vivo de todos os bilhetes ativos."],
+      ["sports", "game.showcase.sports.live.title", "game.showcase.sports.live.description"],
+      ["chart", "game.showcase.sports.odds.title", "game.showcase.sports.odds.description"],
+      ["shield", "game.showcase.sports.risk.title", "game.showcase.sports.risk.description"],
+      ["ticket", "game.showcase.sports.tickets.title", "game.showcase.sports.tickets.description"],
     ],
   },
   live: {
-    label: "Ao Vivo",
-    led: "VERTICAL 03 · IN-PLAY",
-    title: "Ao Vivo · In-Play",
+    labelKey: "game.showcase.live.label",
+    ledKey: "game.showcase.live.led",
+    titleKey: "game.showcase.live.title",
     color: "var(--red)",
-    description: "Transmissão e apostas durante a partida, com atualização instantânea de odds, cash out automático, estatísticas avançadas e máxima imersão para o apostador.",
+    descriptionKey: "game.showcase.live.description",
     items: [
-      ["live", "In-Play em Eventos Ao Vivo", "Apostas durante a partida com atualização instantânea de odds."],
-      ["chart", "Estatísticas em Tempo Real", "Posse, escanteios, cartões e disparos — dados para decisão imediata."],
-      ["refresh", "Cash Out Inteligente", "Jogador saca o lucro parcial antes do final — automático ou manual."],
+      ["live", "game.showcase.live.events.title", "game.showcase.live.events.description"],
+      ["chart", "game.showcase.live.stats.title", "game.showcase.live.stats.description"],
+      ["refresh", "game.showcase.live.cashout.title", "game.showcase.live.cashout.description"],
     ],
   },
-} as const;
+} as const satisfies Record<ShowcaseKey, {
+  labelKey: TranslationKey;
+  ledKey: TranslationKey;
+  titleKey: TranslationKey;
+  color: string;
+  descriptionKey: TranslationKey;
+  items: ReadonlyArray<readonly [string, TranslationKey, TranslationKey]>;
+}>;
 
 function ListIcon({ type }: { type: string }) {
   const props = { width: 20, height: 20 };
@@ -98,16 +107,18 @@ export function MiniChart({ red = false, bars = false }: { red?: boolean; bars?:
 }
 
 function CasinoPanel() {
+  const { t } = useTranslation();
+
   return (
     <>
-      <div className="show-vis-head"><div className="show-vis-title">CASSINO</div><div className="show-vis-pills"><span className="svp">Pragmatic</span><span className="svp">Evolution</span><span className="svp">PG Soft</span></div></div>
+      <div className="show-vis-head"><div className="show-vis-title">{t("game.showcase.casino.panelTitle")}</div><div className="show-vis-pills"><span className="svp">Pragmatic</span><span className="svp">Evolution</span><span className="svp">PG Soft</span></div></div>
       <div className="dash-row">
-        <div className="dash-stat"><div className="l">Sessões ativas</div><div className="v cy mono">12.847</div><div className="delta">▲ +8.4%</div></div>
-        <div className="dash-stat"><div className="l">Top jogo (24h)</div><div className="v mono compact-stat">Crash X</div><div className="delta">2.314 sessões</div></div>
-        <div className="dash-stat"><div className="l">Hold rate</div><div className="v go mono">4.82<span className="small-unit">%</span></div><div className="delta">▲ vs ontem</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.sessionsActive")}</div><div className="v cy mono">12.847</div><div className="delta">▲ +8.4%</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.topGame")}</div><div className="v mono compact-stat">Crash X</div><div className="delta">{t("game.showcase.sessions")}</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.holdRate")}</div><div className="v go mono">4.82<span className="small-unit">%</span></div><div className="delta">{t("game.showcase.vsYesterdayDetail")}</div></div>
       </div>
-      <div className="chart"><div className="chart-head"><div className="chart-title">Apostas por categoria · 24h</div><div className="chart-legend"><span><span className="dot cyan-dot" />Slots</span><span><span className="dot gold-dot" />Live</span><span><span className="dot violet-dot" />Crash</span></div></div><MiniChart bars /></div>
-      <table className="dtable"><thead><tr><th>Jogo</th><th>Provedor</th><th className="r">Sessões</th><th className="r">Hold</th></tr></thead><tbody>
+      <div className="chart"><div className="chart-head"><div className="chart-title">{t("game.showcase.betsByCategory")}</div><div className="chart-legend"><span><span className="dot cyan-dot" />Slots</span><span><span className="dot gold-dot" />Live</span><span><span className="dot violet-dot" />Crash</span></div></div><MiniChart bars /></div>
+      <table className="dtable"><thead><tr><th>{t("game.showcase.game")}</th><th>{t("game.showcase.provider")}</th><th className="r">{t("game.showcase.sessionsHeader")}</th><th className="r">Hold</th></tr></thead><tbody>
         <tr><td>Sweet Bonanza</td><td>Pragmatic Play</td><td className="r mono">3.214</td><td className="r mono st-ok">5.1%</td></tr>
         <tr><td>Aviator</td><td>Spribe</td><td className="r mono">2.847</td><td className="r mono st-ok">4.6%</td></tr>
         <tr><td>Crazy Time</td><td>Evolution</td><td className="r mono">1.913</td><td className="r mono st-warn">3.9%</td></tr>
@@ -125,13 +136,15 @@ const sportRows = [
 ] as const;
 
 function SportsPanel() {
+  const { t } = useTranslation();
+
   return (
     <>
-      <div className="show-vis-head"><div className="show-vis-title g">ESPORTES</div><div className="show-vis-pills"><span className="svp">Genius Sports</span><span className="svp">42ms</span><span className="svp">30+ esportes</span></div></div>
+      <div className="show-vis-head"><div className="show-vis-title g">{t("game.showcase.sports.panelTitle")}</div><div className="show-vis-pills"><span className="svp">Genius Sports</span><span className="svp">42ms</span><span className="svp">{t("game.showcase.operationalSports")}</span></div></div>
       <div className="dash-row">
-        <div className="dash-stat"><div className="l">Mercados abertos</div><div className="v go mono">8.421</div><div className="delta">▲ +312 agora</div></div>
-        <div className="dash-stat"><div className="l">Bilhetes vivos</div><div className="v cy mono">14.297</div><div className="delta">▲ +2.1%</div></div>
-        <div className="dash-stat"><div className="l">Handle dia</div><div className="v go mono compact-handle">R$ 1.2M</div><div className="delta">vs R$ 980k</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.openMarkets")}</div><div className="v go mono">8.421</div><div className="delta">{t("game.showcase.now")}</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.liveTickets")}</div><div className="v cy mono">14.297</div><div className="delta">▲ +2.1%</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.dayHandle")}</div><div className="v go mono compact-handle">R$ 1.2M</div><div className="delta">vs R$ 980k</div></div>
       </div>
       <div className="panel-odds-list">
         {sportRows.map(([flag, teams, league, time, first, second]) => (
@@ -146,19 +159,21 @@ function SportsPanel() {
 }
 
 function LivePanel() {
+  const { t } = useTranslation();
+
   return (
     <>
-      <div className="show-vis-head"><div className="show-vis-title r">AO VIVO</div><div className="show-vis-pills"><span className="svp live">● LIVE</span><span className="svp">Cash Out</span><span className="svp">Streaming</span></div></div>
+      <div className="show-vis-head"><div className="show-vis-title r">{t("game.showcase.live.panelTitle")}</div><div className="show-vis-pills"><span className="svp live">{t("game.showcase.liveNow")}</span><span className="svp">Cash Out</span><span className="svp">Streaming</span></div></div>
       <div className="dash-row">
-        <div className="dash-stat"><div className="l">Eventos ao vivo</div><div className="v red-stat mono">247</div><div className="delta">▲ +18 últ. 10min</div></div>
-        <div className="dash-stat"><div className="l">Cash Out ativos</div><div className="v cy mono">3.428</div><div className="delta">82% aceitos</div></div>
-        <div className="dash-stat"><div className="l">Latência odds</div><div className="v gr mono">42<span className="small-unit">ms</span></div><div className="delta">média 1h</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.liveEvents")}</div><div className="v red-stat mono">247</div><div className="delta">{t("game.showcase.liveDelta")}</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.activeCashout")}</div><div className="v cy mono">3.428</div><div className="delta">{t("game.showcase.accepted")}</div></div>
+        <div className="dash-stat"><div className="l">{t("game.showcase.oddsLatency")}</div><div className="v gr mono">42<span className="small-unit">ms</span></div><div className="delta">{t("game.showcase.lastHour")}</div></div>
       </div>
-      <div className="chart"><div className="chart-head"><div className="chart-title">Volume in-play · últimos 60min</div><div className="chart-legend"><span><span className="dot red-dot" />Apostas/min</span></div></div><MiniChart red /></div>
+      <div className="chart"><div className="chart-head"><div className="chart-title">{t("game.showcase.inPlayVolume")}</div><div className="chart-legend"><span><span className="dot red-dot" />{t("game.showcase.betsPerMinute")}</span></div></div><MiniChart red /></div>
       <div className="kyc-list">
-        <div className="kyc-item"><div className="kyc-step done">✓</div><div className="kyc-text">Gol confirmado · Flamengo<span className="sub">Trigger automático · 1.842 cash outs solicitados</span></div><div className="kyc-status ok">42&apos;</div></div>
-        <div className="kyc-item"><div className="kyc-step curr">●</div><div className="kyc-text">Cartão amarelo · Real Madrid<span className="sub">Recálculo de odds em andamento</span></div><div className="kyc-status wait">67&apos;</div></div>
-        <div className="kyc-item"><div className="kyc-step">3</div><div className="kyc-text">Próximo: escanteio Barcelona<span className="sub">Mercado especial · odds em formação</span></div><div className="kyc-status wait">~71&apos;</div></div>
+        <div className="kyc-item"><div className="kyc-step done">✓</div><div className="kyc-text">{t("game.showcase.goal")}<span className="sub">{t("game.showcase.goalDetail")}</span></div><div className="kyc-status ok">{t("game.showcase.goalTime")}</div></div>
+        <div className="kyc-item"><div className="kyc-step curr">●</div><div className="kyc-text">{t("game.showcase.yellowCard")}<span className="sub">{t("game.showcase.yellowCardDetail")}</span></div><div className="kyc-status wait">{t("game.showcase.yellowCardTime")}</div></div>
+        <div className="kyc-item"><div className="kyc-step">3</div><div className="kyc-text">{t("game.showcase.corner")}<span className="sub">{t("game.showcase.cornerDetail")}</span></div><div className="kyc-status wait">{t("game.showcase.cornerTime")}</div></div>
       </div>
     </>
   );
@@ -166,39 +181,40 @@ function LivePanel() {
 
 export function ShowcaseSection() {
   const [active, setActive] = useState<ShowcaseKey>("casino");
+  const { t } = useTranslation();
   const current = showcase[active];
 
   return (
     <section className="showcase" id="produto">
       <div className="sec-head">
-        <div className="sec-tag"><span className="num">02 /</span>A Plataforma em Detalhe</div>
-        <h2 className="sec-title">Uma solução,<br /><span className="ac">três verticais completas.</span></h2>
-        <p className="sec-desc">Cassino, esportes e ao vivo — todos sob a mesma carteira, o mesmo backoffice e a mesma marca.</p>
+        <div className="sec-tag"><span className="num">02 /</span>{t("game.showcase.eyebrow")}</div>
+        <h2 className="sec-title">{t("game.showcase.heading.line1")}<br /><span className="ac">{t("game.showcase.heading.line2")}</span></h2>
+        <p className="sec-desc">{t("game.showcase.description")}</p>
       </div>
 
-      <div className="show-tabs" role="tablist" aria-label="Verticais da plataforma">
+      <div className="show-tabs" role="tablist" aria-label={t("game.showcase.tabsAria")}>
         {(Object.keys(showcase) as ShowcaseKey[]).map((key) => (
           <button className={`show-tab${active === key ? " on" : ""}`} type="button" role="tab" aria-selected={active === key} onClick={() => setActive(key)} key={key}>
             {key === "casino" ? <DiceIcon /> : key === "sports" ? <FootballIcon /> : <RadioIcon />}
-            {showcase[key].label}
+            {t(showcase[key].labelKey)}
           </button>
         ))}
       </div>
 
       <div className="show-grid">
         <div className="show-info">
-          <div className="led">{current.led}</div>
-          <h3 style={{ color: current.color }}>{current.title}</h3>
-          <p>{current.description}</p>
+          <div className="led">{t(current.ledKey)}</div>
+          <h3 style={{ color: current.color }}>{t(current.titleKey)}</h3>
+          <p>{t(current.descriptionKey)}</p>
           <div className="show-list">
             {current.items.map(([icon, title, description]) => (
               <div className="show-li" key={title}>
                 <div className="show-li-icon"><ListIcon type={icon} /></div>
-                <div><div className="show-li-title">{title}</div><div className="show-li-text">{description}</div></div>
+                <div><div className="show-li-title">{t(title)}</div><div className="show-li-text">{t(description)}</div></div>
               </div>
             ))}
           </div>
-          <div className="show-actions"><a href="#contato" className="btn btn-pri">Ver demonstração →</a><a href="#plataforma" className="btn btn-gh">Especificações</a></div>
+          <div className="show-actions"><a href="#contato" className="btn btn-pri">{t("game.showcase.demo")}</a><a href="#plataforma" className="btn btn-gh">{t("game.showcase.specs")}</a></div>
         </div>
         <div className="show-vis">
           {active === "casino" ? <CasinoPanel /> : active === "sports" ? <SportsPanel /> : <LivePanel />}

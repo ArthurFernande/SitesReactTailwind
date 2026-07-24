@@ -3,14 +3,16 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Target, Handshake, TrendingUp } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const benefits = [
-  { icon: Target, label: "Tecnología validada" },
-  { icon: Handshake, label: "Operación simple" },
-  { icon: TrendingUp, label: "Escalabilidad real" },
-];
+  { icon: Target, labelKey: "arcade.hero.benefit.validated" },
+  { icon: Handshake, labelKey: "arcade.hero.benefit.simple" },
+  { icon: TrendingUp, labelKey: "arcade.hero.benefit.scalable" },
+] satisfies ReadonlyArray<{ icon: typeof Target; labelKey: TranslationKey }>;
 
 export default function HeroSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="home"
@@ -56,13 +58,12 @@ export default function HeroSection() {
           </h1>
 
           <p className="mt-7 max-w-[680px] font-body text-[24px] font-medium leading-[1.08] text-white md:text-[32px] lg:text-[30px]">
-            Solución de Entretenimiento Digital{" "}
-            <span className="text-[#FA3E22]">para Ambientes Controlados</span>
+            {t("arcade.hero.subtitle.beforeHighlight")}
+            <span className="text-[#FA3E22]">{t("arcade.hero.subtitle.highlight")}</span>
           </p>
 
           <p className="mt-7 max-w-[660px] font-body text-[17px] font-semibold leading-[1.55] text-white md:text-[22px] lg:text-[21px]">
-            Impulse su negocio con una plataforma de entretenimiento moderna,
-            segura y lista para escalar.
+            {t("arcade.hero.description")}
           </p>
 
           <div className="mt-9 grid w-full max-w-[620px] grid-cols-3 gap-4 md:gap-8">
@@ -71,7 +72,7 @@ export default function HeroSection() {
 
               return (
                 <motion.div
-                  key={item.label}
+                  key={item.labelKey}
                   initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
@@ -89,7 +90,7 @@ export default function HeroSection() {
                   </div>
 
                   <strong className="mt-4 font-body text-[13px] font-bold leading-tight text-white md:text-[18px]">
-                    {item.label}
+                    {t(item.labelKey)}
                   </strong>
                 </motion.div>
               );

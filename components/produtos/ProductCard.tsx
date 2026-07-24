@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { useTranslation } from "@/components/traducaoButtons";
 
 export type ProductCardProps = {
   title: string;
@@ -26,6 +29,9 @@ export function ProductCard({
   logoScale = 1,
   placeholderColors = ["#0d1f2b", "#121827"],
 }: ProductCardProps) {
+  const { t } = useTranslation();
+  const interpolateTitle = (key: "products.card.imageAlt" | "products.card.logoAlt" | "products.card.learnAria") =>
+    t(key).replace("{title}", title);
   const isExternalLink =
     href.startsWith("http://") || href.startsWith("https://");
 
@@ -116,7 +122,7 @@ export function ProductCard({
         {imageSrc && (
           <Image
             src={imageSrc}
-            alt={`Interface da plataforma ${title}`}
+            alt={interpolateTitle("products.card.imageAlt")}
             fill
             sizes="
               (max-width: 640px) 100vw,
@@ -162,7 +168,7 @@ export function ProductCard({
             >
               <Image
                 src={logoSrc}
-                alt={logoAlt ?? `Logo ${title}`}
+                alt={logoAlt ?? interpolateTitle("products.card.logoAlt")}
                 fill
                 sizes="210px"
                 className="
@@ -249,14 +255,14 @@ export function ProductCard({
             />
 
             <span className="text-[13px] font-medium text-[#778299]">
-              Em operação
+              {t("products.card.status")}
             </span>
           </div>
 
           {/* Somente este elemento redireciona */}
           <a
             href={href}
-            aria-label={`Conhecer ${title}`}
+            aria-label={interpolateTitle("products.card.learnAria")}
             target={isExternalLink ? "_blank" : undefined}
             rel={isExternalLink ? "noopener noreferrer" : undefined}
             className="
@@ -275,7 +281,7 @@ export function ProductCard({
               focus-visible:ring-offset-[#080e15]
             "
           >
-            Conhecer
+            {t("products.card.learn")}
 
             <ArrowRight
               size={15}

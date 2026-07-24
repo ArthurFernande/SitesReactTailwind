@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useTranslation } from "@/components/traducaoButtons";
 
 const initialForm = {
   nome: "",
@@ -21,6 +22,7 @@ function maskPhone(value: string) {
 }
 
 export default function ArcadeLeadForm() {
+  const { t } = useTranslation();
   const [form, setForm] = useState(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -47,14 +49,14 @@ export default function ArcadeLeadForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao enviar formulário.");
+        throw new Error(t("arcade.form.error"));
       }
 
       setIsSuccess(true);
       setForm(initialForm);
     } catch {
       setErrorMessage(
-        "Não foi possível enviar agora. Tente novamente em alguns instantes.",
+        t("arcade.form.error"),
       );
     } finally {
       setIsSubmitting(false);
@@ -65,11 +67,11 @@ export default function ArcadeLeadForm() {
     return (
       <div className="w-full rounded-[10px] bg-black/58 p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-md">
         <h3 className="font-title text-[32px] font-medium leading-tight text-white md:text-[38px]">
-          Cadastro enviado!
+          {t("arcade.form.successTitle")}
         </h3>
 
         <p className="mx-auto mt-5 max-w-[460px] font-body text-[18px] font-semibold leading-[1.5] text-white/90">
-          Obrigado pelo contato. Em breve entraremos em contato com você.
+          {t("arcade.form.successMessage")}
         </p>
 
         <button
@@ -77,7 +79,7 @@ export default function ArcadeLeadForm() {
           onClick={() => setIsSuccess(false)}
           className="mt-8 h-[62px] w-full rounded-[18px] bg-[linear-gradient(90deg,#F3B813,#FFE276)] font-body text-[16px] font-black uppercase text-black shadow-[0_0_35px_rgba(255,205,45,0.35)] transition hover:scale-[1.01]"
         >
-          Preencher novamente
+          {t("arcade.form.reset")}
         </button>
       </div>
     );
@@ -91,7 +93,7 @@ export default function ArcadeLeadForm() {
       <div className="space-y-8">
         <div>
           <label className="mb-3 block font-body text-[15px] font-extrabold uppercase text-white">
-            Nome <span className="text-[#FA3E22]">*</span>
+            {t("arcade.form.name")} <span className="text-[#FA3E22]">*</span>
           </label>
 
           <input
@@ -107,7 +109,7 @@ export default function ArcadeLeadForm() {
 
         <div>
           <label className="mb-3 block font-body text-[15px] font-extrabold uppercase text-white">
-            Whatsapp <span className="text-[#FA3E22]">*</span>
+            {t("arcade.form.whatsapp")} <span className="text-[#FA3E22]">*</span>
           </label>
 
           <input
@@ -127,7 +129,7 @@ export default function ArcadeLeadForm() {
 
         <div>
           <label className="mb-3 block font-body text-[15px] font-extrabold uppercase text-white">
-            Cidade <span className="text-[#FA3E22]">*</span>
+            {t("arcade.form.city")} <span className="text-[#FA3E22]">*</span>
           </label>
 
           <input
@@ -152,7 +154,7 @@ export default function ArcadeLeadForm() {
           disabled={isSubmitting}
           className="h-[72px] w-full rounded-[18px] bg-[linear-gradient(90deg,#F3B813,#FFE276)] font-body text-[18px] font-black uppercase text-black shadow-[0_0_35px_rgba(255,205,45,0.35)] transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {isSubmitting ? "Enviando..." : "Faça seu cadastro agora!"}
+          {t(isSubmitting ? "arcade.form.submitting" : "arcade.form.submit")}
         </button>
       </div>
     </form>

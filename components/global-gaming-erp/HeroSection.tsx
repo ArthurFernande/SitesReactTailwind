@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslation } from "@/components/traducaoButtons";
 
 import { CtaLink } from "./CtaLink";
 import { Reveal } from "./Reveal";
@@ -7,6 +10,7 @@ import styles from "./global-gaming-erp.module.css";
 const imageRoot = "/assets/imgs/global-gaming-erp";
 
 export function HeroSection() {
+  const { t } = useTranslation();
   return (
     <section className={styles.hero}>
       <div className={styles.heroOverlay} />
@@ -18,24 +22,22 @@ export function HeroSection() {
 
           <Reveal animation="zoomIn" delay={100}>
             <h1 className={styles.heroTitle}>
-              La Plataforma Integral de iGaming de Global Tech{" "}
-              <span>Internacional</span>
+              {t("globalErp.hero.title.beforeHighlight")}
+              <span>{t("globalErp.hero.title.highlight")}</span>
             </h1>
           </Reveal>
 
           <Reveal animation="zoomIn" delay={200}>
             <div className={styles.heroDescription}>
               <p>
-                <strong>Global Gaming ERP</strong> es el producto más completo
-                de <strong>Global Tech Internacional</strong>, una empresa con
-                sede en Uruguay y especializada en soluciones tecnológicas
-                avanzadas para el sector de apuestas deportivas y casinos
-                online.
+                {t("globalErp.hero.paragraph1.beforeProduct")}
+                <strong>Global Gaming ERP</strong>
+                {t("globalErp.hero.paragraph1.afterProduct")}
+                <strong>Global Tech Internacional</strong>
+                {t("globalErp.hero.paragraph1.afterCompany")}
               </p>
               <p>
-                Desarrollado con las mejores prácticas internacionales, el ERP
-                está diseñado para operadores que buscan escalar con solidez,
-                gestionar con eficiencia y operar con un estándar global.
+                {t("globalErp.hero.paragraph2")}
               </p>
             </div>
           </Reveal>

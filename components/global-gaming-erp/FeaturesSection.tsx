@@ -1,124 +1,70 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslation } from "@/components/traducaoButtons";
 
 import { Reveal } from "./Reveal";
 import styles from "./global-gaming-erp.module.css";
 
 const imageRoot = "/assets/imgs/global-gaming-erp";
 
-const features = [
-  {
-    title: "Sportsbook Profesional",
-    description: (
-      <>
-        Cobertura global de eventos, cuotas en tiempo real y datos oficiales
-        gracias a la integración con <strong>Genius Sports</strong>.
-      </>
-    ),
-    image: "sport-ball.png",
-    width: 500,
-    height: 333,
-    tone: "navy",
-  },
-  {
-    title: (
-      <>
-        Casino y <br />
-        Casino en Vivo
-      </>
-    ),
-    description: (
-      <>
-        Más de 10.000 juegos con los principales proveedores del mercado:{" "}
-        <strong>
-          Pragmatic Play, Evolution, Spribe, Hacksaw, Evoplay, Tom Horn
-        </strong>
-        , entre otros.
-      </>
-    ),
-    image: "casino-game.png",
-    width: 500,
-    height: 500,
-    tone: "purple",
-  },
-  {
-    title: "Panel Administrativo Completo",
-    description:
-      "Dashboard intuitivo para gestionar usuarios, apuestas, transacciones, afiliados, campañas, límites de riesgo y reportes personalizados.",
-    image: "dashboard.png",
-    width: 500,
-    height: 500,
-    tone: "purple",
-  },
-  {
-    title: "Infraestructura de Alta Escalabilidad",
-    description: (
-      <>
-        Basado en tecnología <strong>Oracle</strong>, con máxima seguridad,
-        rendimiento y capacidad de expansión.
-      </>
-    ),
-    image: "network-infrastructure.png",
-    width: 500,
-    height: 500,
-    tone: "navy",
-  },
-  {
-    title: "CRM y Marketing Automatizado",
-    description: (
-      <>
-        Con <strong>Smartico</strong>, crea campañas inteligentes, misiones,
-        puntos de fidelidad, bonificaciones automáticas y experiencias
-        gamificadas.
-      </>
-    ),
-    image: "marketing-team.png",
-    width: 500,
-    height: 500,
-    tone: "navy",
-  },
-  {
-    title: "Gestión de Afiliados Avanzada",
-    description:
-      "Herramientas completas para seguimiento de rendimiento, comisiones, generación de enlaces y reportes detallados.",
-    image: "affiliate-marketing.png",
-    width: 500,
-    height: 500,
-    tone: "purple",
-  },
-  {
-    title: "Sistema Financiero Integrado",
-    description:
-      "Gestión eficiente de depósitos, retiros, billeteras y métodos de pago.",
-    image: "financial-report.png",
-    width: 500,
-    height: 500,
-    tone: "purple",
-  },
-  {
-    title: "Expansión Internacional",
-    description:
-      "Soporte multilingüe, multimoneda, y configuraciones personalizadas para cada mercado.",
-    image: "language-translator.png",
-    width: 500,
-    height: 500,
-    tone: "navy",
-  },
-] as const;
-
 export function FeaturesSection() {
+  const { t } = useTranslation();
+  const features = [
+    {
+      title: t("globalErp.features.sportsbook.title"),
+      description: <>{t("globalErp.features.sportsbook.beforeBrand")}<strong>Genius Sports</strong>{t("globalErp.features.sportsbook.afterBrand")}</>,
+      image: "sport-ball.png", width: 500, height: 333, tone: "navy",
+    },
+    {
+      title: <>{t("globalErp.features.casino.title.line1")} <br />{t("globalErp.features.casino.title.line2")}</>,
+      description: <>{t("globalErp.features.casino.beforeProviders")}<strong>{t("globalErp.features.casino.providers")}</strong>{t("globalErp.features.casino.afterProviders")}</>,
+      image: "casino-game.png", width: 500, height: 500, tone: "purple",
+    },
+    {
+      title: t("globalErp.features.admin.title"),
+      description: t("globalErp.features.admin.description"),
+      image: "dashboard.png", width: 500, height: 500, tone: "purple",
+    },
+    {
+      title: t("globalErp.features.infrastructure.title"),
+      description: <>{t("globalErp.features.infrastructure.beforeBrand")}<strong>Oracle</strong>{t("globalErp.features.infrastructure.afterBrand")}</>,
+      image: "network-infrastructure.png", width: 500, height: 500, tone: "navy",
+    },
+    {
+      title: t("globalErp.features.crm.title"),
+      description: <>{t("globalErp.features.crm.beforeBrand")}<strong>Smartico</strong>{t("globalErp.features.crm.afterBrand")}</>,
+      image: "marketing-team.png", width: 500, height: 500, tone: "navy",
+    },
+    {
+      title: t("globalErp.features.affiliates.title"),
+      description: t("globalErp.features.affiliates.description"),
+      image: "affiliate-marketing.png", width: 500, height: 500, tone: "purple",
+    },
+    {
+      title: t("globalErp.features.finance.title"),
+      description: t("globalErp.features.finance.description"),
+      image: "financial-report.png", width: 500, height: 500, tone: "purple",
+    },
+    {
+      title: t("globalErp.features.expansion.title"),
+      description: t("globalErp.features.expansion.description"),
+      image: "language-translator.png", width: 500, height: 500, tone: "navy",
+    },
+  ] as const;
   return (
     <section className={styles.featuresSection}>
       <div className={styles.sectionInner}>
         <Reveal animation="slideInLeft">
           <h2 className={styles.sectionTitle}>
-            Funcionalidades que transforman tu operación
+            {t("globalErp.features.heading")}
           </h2>
         </Reveal>
 
         <div className={styles.featuresGrid}>
           {features.map((feature, index) => (
             <Reveal
-              key={typeof feature.title === "string" ? feature.title : index}
+              key={index}
               animation={index % 2 === 0 ? "slideInRight" : "slideInLeft"}
               className={`${styles.featureCard} ${
                 feature.tone === "purple"

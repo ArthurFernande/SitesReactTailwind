@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 import { CtaLink } from "./CtaLink";
 import { Reveal } from "./Reveal";
@@ -7,41 +10,42 @@ import styles from "./global-gaming-erp.module.css";
 const imageRoot = "/assets/imgs/global-gaming-erp";
 
 const rows = [
-  ["Sportsbook con datos oficiales", "star-gtech.svg", "star-gtech-2.svg"],
-  ["Casino con proveedores líderes", "star-gtech.svg", "star-gtech.svg"],
-  ["CRM y Gamificación", "star-gtech.svg", "star-gtech-1.svg"],
-  ["Infraestructura", "star-gtech.svg", "star-gtech-2.svg"],
-  ["Escalabilidad Multimercado", "star-gtech-4.svg", "star-gtech-2.svg"],
+  ["globalErp.comparison.sportsbook", "star-gtech.svg", "star-gtech-2.svg"],
+  ["globalErp.comparison.casino", "star-gtech.svg", "star-gtech.svg"],
+  ["globalErp.comparison.crm", "star-gtech.svg", "star-gtech-1.svg"],
+  ["globalErp.comparison.infrastructure", "star-gtech.svg", "star-gtech-2.svg"],
+  ["globalErp.comparison.multimarket", "star-gtech-4.svg", "star-gtech-2.svg"],
   [
-    "Gestión Avanzada de Afiliados",
+    "globalErp.comparison.affiliates",
     "star-gtech-4.svg",
     "star-gtech-2.svg",
   ],
   [
-    "Panel Administrativo Personalizable",
+    "globalErp.comparison.admin",
     "star-gtech-4.svg",
     "star-gtech-3.svg",
   ],
-] as const;
+] as const satisfies ReadonlyArray<readonly [TranslationKey, string, string]>;
 
 export function ComparisonSection() {
+  const { t } = useTranslation();
   return (
     <section className={styles.comparisonSection}>
       <div className={styles.comparisonOverlay} />
       <Reveal animation="slideInLeft" className={styles.comparisonContent}>
-        <h2 className={styles.sectionTitle}>Comparativo de Ventajas</h2>
+        <h2 className={styles.sectionTitle}>{t("globalErp.comparison.heading")}</h2>
         <p className={styles.comparisonIntro}>
-          A continuación, una comparación entre <strong>Global Gaming ERP</strong>{" "}
-          y plataformas comunes del mercado:
+          {t("globalErp.comparison.intro.beforeProduct")}<strong>Global Gaming ERP</strong>
+          {t("globalErp.comparison.intro.afterProduct")}
         </p>
 
         <div className={styles.tableScroller}>
           <table className={styles.comparisonTable}>
             <thead>
               <tr>
-                <th>Funciononalidad</th>
+                <th>{t("globalErp.comparison.functionality")}</th>
                 <th>Global Gaming ERP</th>
-                <th>Plataformas Comunes</th>
+                <th>{t("globalErp.comparison.commonPlatforms")}</th>
               </tr>
             </thead>
             <tbody>
@@ -53,7 +57,7 @@ export function ComparisonSection() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {label}
+                      {t(label)}
                     </a>
                   </td>
                   <td>

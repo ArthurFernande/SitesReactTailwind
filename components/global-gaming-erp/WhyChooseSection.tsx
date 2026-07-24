@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 import { CtaLink } from "./CtaLink";
 import { Reveal } from "./Reveal";
@@ -7,12 +10,12 @@ import styles from "./global-gaming-erp.module.css";
 const imageRoot = "/assets/imgs/global-gaming-erp";
 
 const reasons = [
-  "Plataforma sólida, confiable y con tecnología de punta",
-  "Integraciones con los principales actores del mercado global",
-  "Flexible y adaptable a cualquier modelo de negocio",
-  "Equipo especializado para soporte técnico y operativo",
-  "Foco total en rendimiento, escalabilidad y experiencia del operador",
-];
+  "globalErp.why.reason1",
+  "globalErp.why.reason2",
+  "globalErp.why.reason3",
+  "globalErp.why.reason4",
+  "globalErp.why.reason5",
+] satisfies readonly TranslationKey[];
 
 function CheckIcon() {
   return (
@@ -23,6 +26,7 @@ function CheckIcon() {
 }
 
 export function WhyChooseSection() {
+  const { t } = useTranslation();
   return (
     <section className={styles.whySection} id="about">
       <div className={styles.whyInner}>
@@ -38,7 +42,7 @@ export function WhyChooseSection() {
 
         <Reveal animation="slideInRight" className={styles.whyCopy}>
           <h2 className={styles.sectionTitle}>
-            ¿Por qué elegir Global Gaming ERP?
+            {t("globalErp.why.heading")}
           </h2>
           <ul className={styles.reasonList}>
             {reasons.map((reason) => (
@@ -46,7 +50,7 @@ export function WhyChooseSection() {
                 <span className={styles.checkIcon}>
                   <CheckIcon />
                 </span>
-                <span>{reason}</span>
+                <span>{t(reason)}</span>
               </li>
             ))}
           </ul>

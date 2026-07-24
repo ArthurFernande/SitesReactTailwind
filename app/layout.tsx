@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   title: "Projeto Gtech",
   description:
     "Projeto Next.js com React, TypeScript, App Router e Tailwind CSS.",
+  icons: {
+    icon: "/assets/imgs/pagina-game/favicon.svg",
+  },
 };
 
 export default function RootLayout({

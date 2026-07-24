@@ -9,31 +9,33 @@ import {
   Globe,
   ShieldCheck,
 } from "lucide-react";
+import { useTranslation, type TranslationKey } from "@/components/traducaoButtons";
 
 const features = [
   {
     icon: Gamepad2,
-    text: "Integración activa con proveedores de juegos",
+    textKey: "arcade.why.item1",
   },
   {
     icon: BadgeCheck,
-    text: "Modelo White Label completo",
+    textKey: "arcade.why.item2",
   },
   {
     icon: PlayCircle,
-    text: "Listo para operación inmediata",
+    textKey: "arcade.why.item3",
   },
   {
     icon: Globe,
-    text: "Escalabilidad regional e internacional",
+    textKey: "arcade.why.item4",
   },
   {
     icon: ShieldCheck,
-    text: "Tecnología validada y homologada",
+    textKey: "arcade.why.item5",
   },
-];
+] satisfies ReadonlyArray<{ icon: typeof Gamepad2; textKey: TranslationKey }>;
 
 export default function WhyArcadeSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="diferenciais"
@@ -79,9 +81,9 @@ export default function WhyArcadeSection() {
           className="order-2 lg:order-1"
         >
           <h2 className="font-title text-center text-[38px] font-medium leading-tight md:text-[56px] lg:text-left lg:text-[46px]">
-            <span className="block text-white">Por qué</span>
+            <span className="block text-white">{t("arcade.why.heading.line1")}</span>
 
-            <span className="block text-[#FA3E22]">Elegir Arcade?</span>
+            <span className="block text-[#FA3E22]">{t("arcade.why.heading.line2")}</span>
           </h2>
 
           <div className="mt-14 space-y-8">
@@ -90,7 +92,7 @@ export default function WhyArcadeSection() {
 
               return (
                 <motion.div
-                  key={item.text}
+                  key={item.textKey}
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{
@@ -115,7 +117,7 @@ export default function WhyArcadeSection() {
                   </div>
 
                   <p className="font-body text-[20px] font-bold leading-snug text-white md:text-[24px] lg:text-[19px]">
-                    {item.text}
+                    {t(item.textKey)}
                   </p>
                 </motion.div>
               );

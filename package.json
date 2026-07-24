@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "validate:translations": "node scripts/validate-translations.mjs",
+    "validate:translations:browser": "node scripts/validate-translations-browser.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.42.2",
